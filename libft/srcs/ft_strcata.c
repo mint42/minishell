@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strcata.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/18 13:16:10 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/16 15:37:39 by rreedy           ###   ########.fr       */
+/*   Created: 2019/03/16 15:47:06 by rreedy            #+#    #+#             */
+/*   Updated: 2019/03/16 15:56:30 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+char	*ft_strcata(char **s1, const char *s2)
 {
-	char	*cpy;
-
-	cpy = ft_strnew(ft_strlen(s));
-	return (cpy ? ft_strcpy(cpy, s) : 0);
+	return (ft_strncata(s1, s2, ft_strlen(s2)));
 }

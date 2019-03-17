@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_skipspace.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/18 13:16:10 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/16 15:37:39 by rreedy           ###   ########.fr       */
+/*   Created: 2019/03/15 20:07:41 by rreedy            #+#    #+#             */
+/*   Updated: 2019/03/16 01:15:58 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+char	*ft_skipspace(char *s)
 {
-	char	*cpy;
-
-	cpy = ft_strnew(ft_strlen(s));
-	return (cpy ? ft_strcpy(cpy, s) : 0);
+	while (s && *s && ft_isspace(*s))
+			++s;
+	return (s);
 }

@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/18 13:16:10 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/16 15:37:39 by rreedy           ###   ########.fr       */
+/*   Created: 2019/03/15 14:02:03 by rreedy            #+#    #+#             */
+/*   Updated: 2019/03/15 19:59:03 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strdup(const char *s)
+void		ft_pwd(char *command)
 {
-	char	*cpy;
-
-	cpy = ft_strnew(ft_strlen(s));
-	return (cpy ? ft_strcpy(cpy, s) : 0);
+	ft_printf("PWD %s\n", command);
 }

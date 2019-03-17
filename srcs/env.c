@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/18 13:16:10 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/16 15:37:39 by rreedy           ###   ########.fr       */
+/*   Created: 2019/03/15 13:58:15 by rreedy            #+#    #+#             */
+/*   Updated: 2019/03/17 00:45:42 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
+#include <unistd.h>
 
-char	*ft_strdup(const char *s)
+void		ft_env(char *command)
 {
-	char	*cpy;
-
-	cpy = ft_strnew(ft_strlen(s));
-	return (cpy ? ft_strcpy(cpy, s) : 0);
+	//need to be able to do this on different folders, or something
+	(void)command;
+	ft_print_double_array(g_envs);
 }

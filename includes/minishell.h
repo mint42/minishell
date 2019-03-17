@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 16:16:47 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/08 18:42:51 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/17 01:53:30 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,37 @@
 # include <errno.h>
 # include "libft.h"
 
-# define TOTAL_COMMANDS (8)
+# define TOTAL_BUILTINS (8)
 
-void			handle_command(char *input);
+static char		*g_builtins[TOTAL_BUILTINS + 1] =
+{
+	"cd",
+	"echo",
+	"env",
+	"exit",
+	"ls",
+	"pwd",
+	"setenv",
+	"unsetenv",
+	0,
+};
+
+char			**g_envs;
+
+void			parse_input(char *input);
+
+char			*ft_getenv(char *env);
+void			expand_tilde(char **command, char **newe);
+void			expand_dollar_sign(char **command, char **env);
+char			*expand_and_join(char *command, char *newe);
+void			ft_cd(char *command);
+void			ft_echo(char *command);
+void			ft_env(char *command);
+void			ft_exit(char *command);
+void			ft_ls(char *command);
+void			ft_pwd(char *command);
+void			ft_setenv(char *command);
+void			ft_unsetenv(char *command);
+void			execute_other(char *command);
 
 #endif
-
