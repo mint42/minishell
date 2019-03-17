@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:02:03 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/15 19:59:03 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/17 03:05:29 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,10 @@
 
 void		ft_pwd(char *command)
 {
-	ft_printf("PWD %s\n", command);
+	char	*pwd;
+
+	(void)command;
+	pwd = ft_getenv("PWD");
+	ft_printf("%s\n", pwd);
+	ft_strdel(&pwd);
 }

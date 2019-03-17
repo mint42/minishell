@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 22:39:27 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/17 01:03:23 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/17 03:42:13 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ char	*ft_getenv(char	*command)
 	{
 		env_len = ft_strlend(g_envs[i], '=');
 		if (((ft_strncmp(command, g_envs[i], env_len)) == 0) &&
-			!ft_isalpha(command[env_len]) &&
-			!ft_isdigit(command[env_len]) &&
-			command[env_len] != '_')
+			command[env_len] == '\0')
 			{
 				return (ft_strdup(g_envs[i] + env_len + 1));
 			}
