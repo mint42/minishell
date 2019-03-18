@@ -6,19 +6,20 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 22:37:00 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/17 01:54:13 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/18 16:42:51 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	expand_tilde(char **command, char **newe)
+void	expand_tilde(char **command, char **tilde)
 {
 	++(*command);
+	(void)tilde;
 	*newe = ft_getenv("HOME");
 }
 
-void	expand_dollar_sign(char **command, char **env)
+void	expand_dollar_sign(char **command, char **dollar_sign)
 {
 	char	*cur;
 
@@ -26,7 +27,7 @@ void	expand_dollar_sign(char **command, char **env)
 	cur = *command;
 	if (cur && ft_isdigit(*cur))
 	{
-		*env = ft_strnew(0);
+		*dollar_sign = ft_strnew(0);
 		return ;
 	}
 	while (cur && *cur)
@@ -36,29 +37,36 @@ void	expand_dollar_sign(char **command, char **env)
 		++cur;
 	}
 	*cur = '\0';
-	*env = ft_getenv(*command);
+	*dollar_sign = ft_getenv(*command);
 	*command = cur;
 }
 
-char	*expand_and_join(char *command, char *newe)
+char	*expand_and_join(char *command, char *s)
 {
 	char	*cur;
-	char	*env;
+	char	*tmp;
 
+	tmp = 0;
+	if (*command == '~')
+	{
+		expand_tilde(&command, &tmp);
+		s = ft_strcata(&s, tmp);
+		ft_strdel(&tmp);
+		++command;
+	}
 	cur = command;
-	env = 0;
 	while (cur && *cur && !ft_isspace(*cur))
 	{
-		while (cur && *cur && !ft_strchr(" \t\n\v\f\r$", *cur))
+		while (*cur && !ft_strchr(" \t\n\v\f\r$\'\"", *cur))
 			++cur;
-		if (cur && *cur != '$')
-			newe = ft_strncata(&newe, command, cur - command);
-		else
+		s = ft_strncata(&s, command, cur - command);
+		if (*cur == '$')
 		{
-			expand_dollar_sign(&cur, &env);
-			newe = ft_strcata(&newe, env);
-			ft_strdel(&env);
+			expand_dollar_sign(&cur, &tmp);
+			s = ft_strcata(&s, tmp);
+			ft_strdel(&tmp);
 		}
+		command = cur;
 	}
-	return (newe);
+	return (s);
 }

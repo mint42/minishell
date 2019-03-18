@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 16:16:47 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/17 01:53:30 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/18 16:45:27 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static char		*g_builtins[TOTAL_BUILTINS + 1] =
 };
 
 char			**g_envs;
+int				g_envs_size;
 
 void			parse_input(char *input);
 
