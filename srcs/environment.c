@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_helpers.c                                      :+:      :+:    :+:   */
+/*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/18 13:13:14 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/18 16:42:53 by rreedy           ###   ########.fr       */
+/*   Created: 2019/03/21 15:28:07 by rreedy            #+#    #+#             */
+/*   Updated: 2019/03/21 19:33:15 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "expand.h"
+#include "libft.h"
 
-int		ft_isenv(char *command, int *i)
+int		ft_isenv(char *s, int *i)
 {
 	size_t			env_len;
 
@@ -20,17 +21,14 @@ int		ft_isenv(char *command, int *i)
 	while (g_envs[*i])
 	{
 		env_len = ft_strlend(g_envs[*i], '=');
-		if (((ft_strncmp(command, g_envs[*i], env_len)) == 0) &&
-			command[env_len] == '\0')
-			{
-				return (1)
-			}
-		++*i;
+		if (((ft_strncmp(s, g_envs[*i], env_len)) == 0) && s[env_len] == '\0')
+			return (1);
+		++(*i);
 	}
 	return (0);
 }
 
-char	*ft_getenv(char	*command)
+char	*ft_getenv(char	*s)
 {
 	size_t			env_len;
 	int				i;
@@ -39,70 +37,55 @@ char	*ft_getenv(char	*command)
 	while (g_envs[i])
 	{
 		env_len = ft_strlend(g_envs[i], '=');
-		if (((ft_strncmp(command, g_envs[i], env_len)) == 0) &&
-			command[env_len] == '\0')
-			{
-				return (ft_strdup(g_envs[i] + env_len + 1));
-			}
+		if (((ft_strncmp(s, g_envs[i], env_len)) == 0) && s[env_len] == '\0')
+			return (ft_strdup(g_envs[i] + env_len + 1));
 		++i;
 	}
 	return (ft_strnew(0));
 }
 
-char	*replace_env(char *command, size_t env_len, int i)
+char	*replace_env(char *old_env, size_t env_len)
 {
 	char	*new_env;
 
-	new_env = ft_strndup(command, env_len + 1);
-	new_env = expand_and_join(command + env_len, new_env);
+	new_env = ft_strndup(old_env, env_len + 1);
+	new_env = expand_string(old_env + env_len, new_env, 1);
 	return (new_env);
 }
 
-char	*add_env(char *command)
+char	**add_env(char *new_env, int num_envs)
 {
 	char	**new_envs;
 	int		i;
 
 	i = 0;
-	while (g_envs && g_envs[i])
-		++i;
-	new_envs = (char **)ft_memalloc(sizeof(char *) * (i + 2));
-	i = 0;
+	new_envs = (char **)ft_memalloc(sizeof(char *) * (num_envs + 1));
 	while (g_envs && g_envs[i])
 	{
 		new_envs[i] = ft_strdup(g_envs[i]);
 		++i;
 	}
-	new_envs[i] = expand_and_join(command, new_envs[i]);
+	new_envs[i] = expand_string(new_env, new_envs[i], 1);
 	new_envs[i + 1] = 0;
-	ft_delete_double_array(&g_envs);
 	return (new_envs);
 }
 
-char	*delete_env(char *command)
+char	**delete_env(int env_to_delete, int num_envs)
 {
 	char	**new_envs;
 	size_t	env_len;
 	int		i;
 
 	i = 0;
-	while (g_envs && g_envs[i])
-		++i;
-	new_envs = (char **)ft_memalloc(sizeof(char *) * i);
-	i = 0;
 	env_len = 0;
+	new_envs = (char **)ft_memalloc(sizeof(char *) * (num_envs + 1));
 	while (g_envs && g_envs[i])
 	{
 		env_len = ft_strlend(g_envs[i], '=');
-		if (((ft_strncmp(command, g_envs[i], env_len)) == 0) && 
-			command[env_len] == '\0')
-		{
-			continue;
-		}
-		new_envs[i] = ft_strdup(g_envs[i]);
+		if (i != env_to_delete)
+			new_envs[i] = ft_strdup(g_envs[i]);
 		++i;
 	}
 	new_envs[i] = 0;
-	ft_delete_double_array(&g_envs);
 	return (new_envs);
 }

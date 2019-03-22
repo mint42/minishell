@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlend.c                                       :+:      :+:    :+:   */
+/*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/31 16:16:46 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/20 14:00:48 by rreedy           ###   ########.fr       */
+/*   Created: 2019/03/21 18:45:30 by rreedy            #+#    #+#             */
+/*   Updated: 2019/03/21 19:43:44 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef EXPAND_H
+# define EXPAND_H
 
-size_t	ft_strlend(const char *s, int c)
-{
-	size_t	i;
+char	*expand_tilde(char **input);
+char	*expand_dollar_sign(char **input);
+char	*expand_regular(char **input);
+char	*expand_single_quote(char **input);
+char	*expand_double_quote(char **input);
+void	expand_string(char **s, char **input, int check_tilde);
+void	expand_args(char ***args, int *argc, char *input)
 
-	i = 0;
-	if (!s)
-		return (i);
-	while (s[i] && s[i] != (unsigned char)c)
-		++i;
-	return (i);
-}
+#endif

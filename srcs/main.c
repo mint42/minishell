@@ -6,12 +6,13 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:29:10 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/17 01:02:26 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/21 19:11:59 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <unistd.h>
+#include "environment.h"
+#include "libft.h"
 
 void		print_prompt()
 {
@@ -35,6 +36,7 @@ int			main()
 	char			*input;
 
 	g_envs = ft_dup_double_array(environ);
+	g_num_envs = ft_len_double_array(g_envs);
 	while (42)
 	{
 		print_prompt();

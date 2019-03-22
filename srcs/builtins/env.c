@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/15 14:00:57 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/15 19:58:20 by rreedy           ###   ########.fr       */
+/*   Created: 2019/03/15 13:58:15 by rreedy            #+#    #+#             */
+/*   Updated: 2019/03/21 19:25:40 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "command.h"
+#include "environment.h"
+#include "libft.h"
 
-void		ft_echo(char *command)
+int		ft_env(t_command *command)
 {
-	ft_printf("ECHO %s\n", command);
+	//need to be able to do this on different folders, or something
+	(void)command;
+	ft_print_double_array(g_envs);
+	return (0);
 }

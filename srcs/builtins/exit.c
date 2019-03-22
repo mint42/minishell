@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls.c                                               :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/15 19:57:03 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/15 19:57:26 by rreedy           ###   ########.fr       */
+/*   Created: 2019/03/15 14:02:33 by rreedy            #+#    #+#             */
+/*   Updated: 2019/03/21 19:34:23 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "command.h"
+#include "libft.h"
 
-void		ft_ls(char *command)
+int		ft_exit(char *command)
 {
-	ft_printf("LS %s\n", command);
+	ft_printf("EXIT %s\n", command->name);
+	return (0);
 }
-

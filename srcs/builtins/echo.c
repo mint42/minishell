@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/15 14:02:33 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/15 19:58:46 by rreedy           ###   ########.fr       */
+/*   Created: 2019/03/15 14:00:57 by rreedy            #+#    #+#             */
+/*   Updated: 2019/03/21 19:34:15 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "command.h"
+#include "libft.h"
 
-void		ft_exit(char *command)
+int		ft_echo(t_command *command)
 {
-	ft_printf("EXIT %s\n", command);
+	ft_printf("ECHO %s\n", command->name);
+	return (0);
 }

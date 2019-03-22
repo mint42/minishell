@@ -5,68 +5,58 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/16 22:37:00 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/18 16:42:51 by rreedy           ###   ########.fr       */
+/*   Created: 2019/03/21 19:33:02 by rreedy            #+#    #+#             */
+/*   Updated: 2019/03/21 19:33:06 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "expand.h"
+#include "libft.h"
 
-void	expand_tilde(char **command, char **tilde)
+void		expand_string(char **s, char **input, int check_tilde)
 {
-	++(*command);
-	(void)tilde;
-	*newe = ft_getenv("HOME");
-}
-
-void	expand_dollar_sign(char **command, char **dollar_sign)
-{
-	char	*cur;
-
-	++(*command);
-	cur = *command;
-	if (cur && ft_isdigit(*cur))
-	{
-		*dollar_sign = ft_strnew(0);
-		return ;
-	}
-	while (cur && *cur)
-	{
-		if (!ft_isalpha(*cur) && !ft_isdigit(*cur) && *cur != '_')
-			break ;
-		++cur;
-	}
-	*cur = '\0';
-	*dollar_sign = ft_getenv(*command);
-	*command = cur;
-}
-
-char	*expand_and_join(char *command, char *s)
-{
-	char	*cur;
 	char	*tmp;
 
 	tmp = 0;
-	if (*command == '~')
+	if (check_tilde && **input == '~')
+		expand_tilde(s, input);
+	while (!ft_strchr(" \t\n\v\f\r", **input))
 	{
-		expand_tilde(&command, &tmp);
-		s = ft_strcata(&s, tmp);
+		if (**input == '$')
+			expand_dollar_sign(&tmp, input);
+		else if (**input == ''')
+			expand_single_quotes(&tmp, input);
+		else if (**input == '"')
+			expand_double_quotes(&tmp, input);
+		else
+			expand_regular(&tmp, input);
+		ft_strcata(s, tmp);
 		ft_strdel(&tmp);
-		++command;
 	}
-	cur = command;
-	while (cur && *cur && !ft_isspace(*cur))
+}
+
+void		expand_args(char ***args, int *argc, char *input)
+{
+	char	*tmp;
+	char	**cur;
+
+	tmp = 0;
+	*cur = input;
+	while(**cur)
 	{
-		while (*cur && !ft_strchr(" \t\n\v\f\r$\'\"", *cur))
-			++cur;
-		s = ft_strncata(&s, command, cur - command);
-		if (*cur == '$')
-		{
-			expand_dollar_sign(&cur, &tmp);
-			s = ft_strcata(&s, tmp);
-			ft_strdel(&tmp);
-		}
-		command = cur;
+		++(*argc);
+		*cur = ft_next_word(*cur);
 	}
-	return (s);
+	if (!*argc)
+		return ;
+	*args = (char **)ft_memalloc(sizeof(char *) * (argc + 1));
+	cur = *args;
+	while (*input)
+	{
+		expand_string(&tmp, &input, 1);
+		ft_strcata(*cur, tmp);
+		ft_strdel(&tmp);
+		input = ft_next_word(input);
+		++cur;
+	}
 }
