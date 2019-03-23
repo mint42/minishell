@@ -6,11 +6,12 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:28:07 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/21 19:33:15 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/22 18:42:45 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
+#include "environment.h"
 #include "libft.h"
 
 int		ft_isenv(char *s, int *i)
@@ -48,8 +49,7 @@ char	*replace_env(char *old_env, size_t env_len)
 {
 	char	*new_env;
 
-	new_env = ft_strndup(old_env, env_len + 1);
-	new_env = expand_string(old_env + env_len, new_env, 1);
+	new_env = ft_strdup(old_env);
 	return (new_env);
 }
 

@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:29:10 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/21 19:11:59 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/22 15:58:12 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int			main()
 	while (42)
 	{
 		print_prompt();
-		if ((get_next_line(2, &input)) == 1)
+		if ((get_next_line(1, &input)) == 1)
 		{
 			parse_input(input);
 			ft_strdel(&input);

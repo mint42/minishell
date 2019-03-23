@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:02:57 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/21 19:30:32 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/22 18:21:47 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,14 @@
 #include "environment.h"
 #include "libft.h"
 
-static char		*validate_and_isolate_env(char *command)
+static char		*isolate_env(char *env, size_t len)
+{
+	if (len)
+		env[len - 1] = '\0';
+	return (ft_strdup(env));
+}
+
+static int		validate_env(char *command)
 {
 	char	*cur;
 	int		error;
@@ -25,42 +32,53 @@ static char		*validate_and_isolate_env(char *command)
 		return (error);
 	if (ft_isdigit(*cur))
 		error = 1;
-	while (cur && *cur)
+	while (!error && cur && *cur && *cur != '=')
 	{
-		if (*cur == '=')
-			break ;
+		if (!ft_isdigit(*cur) && !ft_isalpha(*cur) && *cur != '_')
+			error = 1;
 		++cur;
 	}
-	if (*cur == '=')
-		*cur = '\0';
+	if (error)
+		ft_printf("squish: setenv: `%s': not a valid identifier\n", command);
+	return (!error);
+}
+
+static void		replace_g_env(cur, len)
+{
+	ft_strdel(&g_envs[i]);
+	g_envs[i] = replace_env(cur, len);
+}
+
+static void		add_g_env(cur)
+{
+	char	**new_envs;
+
+	++g_num_envs;
+	new_envs = add_env(cur, g_num_envs);
+	ft_delete_double_array(&g_envs);
+	g_envs = new_envs;
 }
 
 int				ft_setenv(t_command	*command)
 {
-	char	**new_envs;
+	char	**cur;
 	char	*env;
-	int		i;
+	size_t	len;
 
-	i = 0;
-	env = 0;
-	command = ft_next_word(command);
-	while (command && *command)
+	cur = command->args;
+	while (cur)
 	{
-		if (validate_and_isolate_env(command, &env))
-			
-		else if (ft_isenv(env, &i))
+		if (validate_env(cur))
 		{
-			ft_strdel(&g_envs[i]);
-			g_envs[i] = replace_env(command, ft_strlend(g_envs[i], '='));
+			len = ft_strlend(cur, '=');
+			env = isolate_env(cur, len);
+			if (ft_isenv(env, &i))
+				replace_g_env(cur, len);
+			else
+				add_g_env(cur);
+			ft_strdel(&env);
 		}
-		else
-		{
-			++g_num_envs;
-			new_envs = add_env(command, g_num_envs);
-			ft_delete_double_array(&g_envs);
-			g_envs = new_envs;
-		}
-		command = ft_next_word(command);
+		++cur;
 	}
 	return (0);
 }

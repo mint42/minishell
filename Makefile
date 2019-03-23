@@ -6,7 +6,7 @@
 #    By: rreedy <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/07 18:40:55 by rreedy            #+#    #+#              #
-#    Updated: 2019/03/09 17:41:28 by rreedy           ###   ########.fr        #
+#    Updated: 2019/03/22 18:32:51 by rreedy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,8 @@ NAME := minishell
 LIB += libft/libft.a
 
 OBJS := $(patsubst %.c,%.o,$(wildcard ./srcs/*.c))
+BUILTINOBJS := $(patsubst %.c,%.o,$(wildcard ./srcs/builtins*.c))
+
 
 CC := gcc
 INCLUDES := -I./includes -I./libft/includes
@@ -25,7 +27,7 @@ LFLAGS += -L./libft -lft
 all: $(NAME)
 
 $(NAME): $(LIB) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LFLAGS)
+	$(CC) $(CFLAGS) $(OBJS) $(BUILTINOBJS) -o $(NAME) $(LFLAGS)
 
 $(LIB):
 	@- make -C libft/ all
