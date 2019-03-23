@@ -6,12 +6,13 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 19:04:33 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/21 18:05:30 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/22 22:09:28 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "builtins.h"
+#include "minishell.h"
+#include "libft.h"
 
 static void		execute_command(t_command *command, int i)
 {
@@ -38,12 +39,8 @@ static int		get_index(char *command_name)
 	while (g_builtins[i])
 	{
 		builtin_len = ft_strlen(g_builtins[i]);
-		if ((ft_strncmp(command_name, g_builtins[i], builtin_len)) == 0)
-		{
-			if (!ft_strchr(" \t\n\v\f\r", input[builtin_len]))
-					i = TOTAL_BUILTINS;
+		if (ft_strnequ(command_name, g_builtins[i], builtin_len))
 			break;
-		}
 		++i;
 	}
 	return (i);

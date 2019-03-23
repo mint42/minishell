@@ -6,14 +6,15 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:28:50 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/21 19:33:59 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/22 22:04:25 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command.h"
 #include "libft.h"
 
-void		execute_other(t_command *command)
+int		execute_other(t_command *command)
 {
 	ft_printf("BAD/OTHER %s\n", command->name);
+	return (0);
 }

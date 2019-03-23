@@ -6,42 +6,13 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:03:14 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/22 18:31:38 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/22 23:52:13 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command.h"
 #include "environment.h"
 #include "libft.h"
-
-static char		*isolate_env(char *env, size_t len)
-{
-	if (len)
-		env[len - 1] = '\0';
-	return (ft_strdup(env));
-}
-
-static int		validate_env(char *command)
-{
-	char	*cur;
-	int		error;
-
-	cur = command;
-	error = 0;
-	if (!cur)
-		return (error);
-	if (ft_isdigit(*cur))
-		error = 1;
-	while (!error && cur && *cur && *cur != '=')
-	{
-		if (!ft_isdigit(*cur) && !ft_isalpha(*cur) && *cur != '_')
-			error = 1;
-		++cur;
-	}
-	if (error)
-		ft_printf("squish: setenv: `%s': not a valid identifier\n", command);
-	return (!error);
-}
 
 static void		delete_g_env(int i)
 {
@@ -57,19 +28,23 @@ int				ft_unsetenv(t_command *command)
 {
 	char	**cur;
 	char	*env;
-	size_t	len;
+	size_t	env_len;
+	int		i;
 
+	i = 0;
 	cur = command->args;
-	while (cur)
+	while (cur && *cur)
 	{
-		if (validate_env(cur))
+		env_len = ft_strlend(*cur, '=');
+		if (validate_env(*cur) && (*cur)[env_len] == '\0')
 		{
-			len = ft_strlend(cur, '=');
-			env = isolate_env(cur, len);
-			if (ft_isenv(env, &i))
-				delete_g_env(i);
+			env = ft_strndup(*cur, env_len);
+			ft_isenv(env, &i);
+			delete_g_env(i);
 			ft_strdel(&env);
 		}
+		else
+			ft_printf("squish: unsetenv: `%s': not a valid identifier\n", *cur);
 		++cur;
 	}
 	return (0);

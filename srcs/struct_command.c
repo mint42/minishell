@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:29:18 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/21 19:16:27 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/22 22:10:25 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 t_command	*get_command_struct(char *input)
 {
-	struct t_command	*command;
+	t_command	*command;
 
 	command = (t_command *)ft_memalloc(sizeof(t_command));
 	command->name = 0;
@@ -35,8 +35,8 @@ void		delete_command_struct(t_command **command)
 {
 	if (*command)
 	{
-		if ((*command)->command)
-			ft_strdel(&((*command)->command));
+		if ((*command)->name)
+			ft_strdel(&((*command)->name));
 		if ((*command)->args)
 			ft_delete_double_array(&((*command)->args));
 		ft_memdel((void **)command);

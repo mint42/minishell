@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 14:16:02 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/16 16:11:30 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/22 22:02:12 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int					ft_isspace(int c);
 int					ft_isupper(int c);
 char				*ft_itoa(int n);
 char				*ft_itoabase(long long int n, int base);
+size_t				ft_len_double_array(char **double_array);
 void				ft_lstadd(t_list **head, t_list *link);
 void				ft_lstdel(t_list **list, void (*del)(void *, size_t));
 void				ft_lstdelone(t_list **link, void (*del)(void *, size_t));

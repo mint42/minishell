@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:02:57 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/22 18:21:47 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/22 23:49:42 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,47 +14,18 @@
 #include "environment.h"
 #include "libft.h"
 
-static char		*isolate_env(char *env, size_t len)
-{
-	if (len)
-		env[len - 1] = '\0';
-	return (ft_strdup(env));
-}
-
-static int		validate_env(char *command)
-{
-	char	*cur;
-	int		error;
-
-	cur = command;
-	error = 0;
-	if (!cur)
-		return (error);
-	if (ft_isdigit(*cur))
-		error = 1;
-	while (!error && cur && *cur && *cur != '=')
-	{
-		if (!ft_isdigit(*cur) && !ft_isalpha(*cur) && *cur != '_')
-			error = 1;
-		++cur;
-	}
-	if (error)
-		ft_printf("squish: setenv: `%s': not a valid identifier\n", command);
-	return (!error);
-}
-
-static void		replace_g_env(cur, len)
+static void		replace_g_env(char *new_env, int i)
 {
 	ft_strdel(&g_envs[i]);
-	g_envs[i] = replace_env(cur, len);
+	g_envs[i] = ft_strdup(new_env);
 }
 
-static void		add_g_env(cur)
+static void		add_g_env(char *new_env)
 {
 	char	**new_envs;
 
 	++g_num_envs;
-	new_envs = add_env(cur, g_num_envs);
+	new_envs = add_env(new_env, g_num_envs);
 	ft_delete_double_array(&g_envs);
 	g_envs = new_envs;
 }
@@ -63,21 +34,25 @@ int				ft_setenv(t_command	*command)
 {
 	char	**cur;
 	char	*env;
-	size_t	len;
+	size_t	env_len;
+	int		i;
 
+	i = 0;
 	cur = command->args;
-	while (cur)
+	while (cur && *cur)
 	{
-		if (validate_env(cur))
+		env_len = ft_strlend(*cur, '=');
+		if (validate_env(*cur) && (*cur)[env_len] == '=')
 		{
-			len = ft_strlend(cur, '=');
-			env = isolate_env(cur, len);
+			env = ft_strndup(*cur, env_len);
 			if (ft_isenv(env, &i))
-				replace_g_env(cur, len);
+				replace_g_env(*cur, i);
 			else
-				add_g_env(cur);
+				add_g_env(*cur);
 			ft_strdel(&env);
 		}
+		else
+			ft_printf("squish: setenv: `%s': not a valid identifier\n", *cur);
 		++cur;
 	}
 	return (0);

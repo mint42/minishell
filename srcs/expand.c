@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 19:33:02 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/21 19:33:06 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/22 23:31:02 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,39 +24,40 @@ void		expand_string(char **s, char **input, int check_tilde)
 	{
 		if (**input == '$')
 			expand_dollar_sign(&tmp, input);
-		else if (**input == ''')
+		else if (**input == '\'')
 			expand_single_quotes(&tmp, input);
-		else if (**input == '"')
+		else if (**input == '\"')
 			expand_double_quotes(&tmp, input);
 		else
 			expand_regular(&tmp, input);
-		ft_strcata(s, tmp);
+		*s = ft_strcata(s, tmp);
 		ft_strdel(&tmp);
 	}
+	*input = ft_skipspace(*input);
 }
 
 void		expand_args(char ***args, int *argc, char *input)
 {
 	char	*tmp;
 	char	**cur;
+	char	*input_cur;
 
 	tmp = 0;
-	*cur = input;
-	while(**cur)
+	input_cur = input;
+	while(input_cur && *input_cur)
 	{
 		++(*argc);
-		*cur = ft_next_word(*cur);
+		input_cur = ft_next_word(input_cur);
 	}
 	if (!*argc)
 		return ;
-	*args = (char **)ft_memalloc(sizeof(char *) * (argc + 1));
+	*args = (char **)ft_memalloc(sizeof(char *) * (*argc + 1));
 	cur = *args;
-	while (*input)
+	while (input && *input)
 	{
 		expand_string(&tmp, &input, 1);
-		ft_strcata(*cur, tmp);
+		*cur = ft_strdup(tmp);
 		ft_strdel(&tmp);
-		input = ft_next_word(input);
 		++cur;
 	}
 }

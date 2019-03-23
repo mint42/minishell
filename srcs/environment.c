@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:28:07 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/22 18:42:45 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/22 23:43:40 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		ft_isenv(char *s, int *i)
 	while (g_envs[*i])
 	{
 		env_len = ft_strlend(g_envs[*i], '=');
-		if (((ft_strncmp(s, g_envs[*i], env_len)) == 0) && s[env_len] == '\0')
+		if (ft_strnequ(s, g_envs[*i], env_len))
 			return (1);
 		++(*i);
 	}
@@ -38,19 +38,31 @@ char	*ft_getenv(char	*s)
 	while (g_envs[i])
 	{
 		env_len = ft_strlend(g_envs[i], '=');
-		if (((ft_strncmp(s, g_envs[i], env_len)) == 0) && s[env_len] == '\0')
+		if (ft_strnequ(s, g_envs[i], env_len))
 			return (ft_strdup(g_envs[i] + env_len + 1));
 		++i;
 	}
 	return (ft_strnew(0));
 }
 
-char	*replace_env(char *old_env, size_t env_len)
+int		validate_env(char *env)
 {
-	char	*new_env;
+	char	*cur;
+	int		error;
 
-	new_env = ft_strdup(old_env);
-	return (new_env);
+	cur = env;
+	error = 0;
+	if (!cur)
+		return (error);
+	if (ft_isdigit(*cur))
+		error = 1;
+	while (!error && cur && *cur && *cur != '=')
+	{
+		if (!ft_isdigit(*cur) && !ft_isalpha(*cur) && *cur != '_')
+			error = 1;
+		++cur;
+	}
+	return (!error);
 }
 
 char	**add_env(char *new_env, int num_envs)
@@ -65,8 +77,7 @@ char	**add_env(char *new_env, int num_envs)
 		new_envs[i] = ft_strdup(g_envs[i]);
 		++i;
 	}
-	new_envs[i] = expand_string(new_env, new_envs[i], 1);
-	new_envs[i + 1] = 0;
+	new_envs[i] = ft_strdup(new_env);
 	return (new_envs);
 }
 
@@ -86,6 +97,5 @@ char	**delete_env(int env_to_delete, int num_envs)
 			new_envs[i] = ft_strdup(g_envs[i]);
 		++i;
 	}
-	new_envs[i] = 0;
 	return (new_envs);
 }

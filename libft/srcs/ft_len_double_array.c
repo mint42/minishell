@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.h                                          :+:      :+:    :+:   */
+/*   ft_len_double_array.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/21 17:40:13 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/22 21:39:08 by rreedy           ###   ########.fr       */
+/*   Created: 2019/03/22 21:58:32 by rreedy            #+#    #+#             */
+/*   Updated: 2019/03/22 22:01:18 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COMMAND_H
-# define COMMAND_H
+#include "libft.h"
 
-typedef struct	s_command
+size_t		ft_len_double_array(char **double_array)
 {
-	char		*name;
-	char		**args;
-	int			argc;
-	int			ret;
-}				t_command;
+	size_t		len;
 
-t_command		*get_command_struct(char *input);
-void			delete_command_struct(t_command **command);
-
-#endif
+	len = 0;
+	if (!double_array)
+		return (len);
+	while (double_array[len])
+		++(len);
+	return (len);
+}
