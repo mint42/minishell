@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 17:40:13 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/22 21:39:08 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/24 18:09:51 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct	s_command
 	int			ret;
 }				t_command;
 
-t_command		*get_command_struct(char *input);
+t_command		*init_command_struct(void);
 void			delete_command_struct(t_command **command);
 
 #endif

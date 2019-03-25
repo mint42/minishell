@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 19:33:02 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/22 23:31:02 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/24 18:14:15 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,30 @@ void		expand_string(char **s, char **input, int check_tilde)
 		ft_strdel(&tmp);
 	}
 	*input = ft_skipspace(*input);
+}
+
+void		expand_single_arg(char ***args, int *argc, char *input)
+{
+	char	*tmp;
+
+	tmp = 0;
+	*argc = 1;
+	*args = (char **)ft_memalloc(sizeof(char *) * (*argc + 1));
+	if (*input == '~')
+		expand_tilde(*(args), &input);
+	while (input && *input)
+	{
+		if (*input == '$')
+			expand_dollar_sign(&tmp, &input);
+		else if (*input == '\'')
+			expand_single_quotes(&tmp, &input);
+		else if (*input == '\"')
+			expand_double_quotes(&tmp, &input);
+		else
+			expand_regular_with_space(&tmp, &input);
+		**(args) = ft_strcata(*(args), tmp);
+		ft_strdel(&tmp);
+	}
 }
 
 void		expand_args(char ***args, int *argc, char *input)

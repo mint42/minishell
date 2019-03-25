@@ -6,13 +6,34 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:02:57 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/22 23:49:42 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/24 16:36:16 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command.h"
 #include "environment.h"
 #include "libft.h"
+
+
+static int		validate_env(char *env)
+{
+	char	*cur;
+	int		error;
+
+	cur = env;
+	error = 0;
+	if (!cur || !*cur)
+		error = 1;
+	if (ft_isdigit(*cur))
+		error = 1;
+	while (!error && cur && *cur)
+	{
+		if (!ft_isdigit(*cur) && !ft_isalpha(*cur) && *cur != '_')
+			error = 1;
+		++cur;
+	}
+	return (!error);
+}
 
 static void		replace_g_env(char *new_env, int i)
 {
@@ -42,17 +63,17 @@ int				ft_setenv(t_command	*command)
 	while (cur && *cur)
 	{
 		env_len = ft_strlend(*cur, '=');
-		if (validate_env(*cur) && (*cur)[env_len] == '=')
+		env = ft_strndup(*cur, env_len);
+		if (validate_env(env) && (*cur)[env_len] == '=')
 		{
-			env = ft_strndup(*cur, env_len);
 			if (ft_isenv(env, &i))
 				replace_g_env(*cur, i);
 			else
 				add_g_env(*cur);
-			ft_strdel(&env);
 		}
 		else
 			ft_printf("squish: setenv: `%s': not a valid identifier\n", *cur);
+		ft_strdel(&env);
 		++cur;
 	}
 	return (0);

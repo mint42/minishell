@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:29:18 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/22 22:10:25 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/24 18:10:02 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "expand.h"
 #include "libft.h"
 
-t_command	*get_command_struct(char *input)
+t_command	*init_command_struct(void)
 {
 	t_command	*command;
 
@@ -23,11 +23,6 @@ t_command	*get_command_struct(char *input)
 	command->args = 0;
 	command->argc = 0;
 	command->ret = 0;
-	if (input)
-	{
-		expand_string(&(command->name), &input, 0);
-		expand_args(&(command->args), &(command->argc), input);
-	}
 	return (command);
 }
 

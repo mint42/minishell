@@ -6,12 +6,14 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 19:04:33 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/22 22:09:28 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/24 20:25:39 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 #include "minishell.h"
+#include "command.h"
+#include "expand.h"
 #include "libft.h"
 
 static void		execute_command(t_command *command, int i)
@@ -60,8 +62,13 @@ void			parse_input(char *input)
 			*cur = '\0';
 			cur = ft_skipspace(cur + 1);
 		}
-		command = get_command_struct(input);
+		command = init_command_struct();
+		expand_string(&(command->name), &input, 0);
 		i = get_index(command->name);
+		if (i == ECHO_INDEX)
+			expand_single_arg(&(command->args), &(command->argc), input);
+		else
+			expand_args(&(command->args), &(command->argc), input);
 		execute_command(command, i);
 		delete_command_struct(&command);
 		input = cur;

@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:28:07 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/22 23:43:40 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/24 21:13:28 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		ft_isenv(char *s, int *i)
 	while (g_envs[*i])
 	{
 		env_len = ft_strlend(g_envs[*i], '=');
-		if (ft_strnequ(s, g_envs[*i], env_len))
+		if (!ft_strncmp(s, g_envs[*i], env_len) && s[env_len] == '\0')
 			return (1);
 		++(*i);
 	}
@@ -38,31 +38,11 @@ char	*ft_getenv(char	*s)
 	while (g_envs[i])
 	{
 		env_len = ft_strlend(g_envs[i], '=');
-		if (ft_strnequ(s, g_envs[i], env_len))
+		if (!ft_strncmp(s, g_envs[i], env_len) && s[env_len] == '\0')
 			return (ft_strdup(g_envs[i] + env_len + 1));
 		++i;
 	}
 	return (ft_strnew(0));
-}
-
-int		validate_env(char *env)
-{
-	char	*cur;
-	int		error;
-
-	cur = env;
-	error = 0;
-	if (!cur)
-		return (error);
-	if (ft_isdigit(*cur))
-		error = 1;
-	while (!error && cur && *cur && *cur != '=')
-	{
-		if (!ft_isdigit(*cur) && !ft_isalpha(*cur) && *cur != '_')
-			error = 1;
-		++cur;
-	}
-	return (!error);
 }
 
 char	**add_env(char *new_env, int num_envs)
@@ -84,17 +64,17 @@ char	**add_env(char *new_env, int num_envs)
 char	**delete_env(int env_to_delete, int num_envs)
 {
 	char	**new_envs;
-	size_t	env_len;
 	int		i;
 
 	i = 0;
-	env_len = 0;
 	new_envs = (char **)ft_memalloc(sizeof(char *) * (num_envs + 1));
-	while (g_envs && g_envs[i])
+	while (num_envs)
 	{
-		env_len = ft_strlend(g_envs[i], '=');
-		if (i != env_to_delete)
+		if (i < env_to_delete)
 			new_envs[i] = ft_strdup(g_envs[i]);
+		else
+			new_envs[i] = ft_strdup(g_envs[i + 1]);
+		--num_envs;
 		++i;
 	}
 	return (new_envs);

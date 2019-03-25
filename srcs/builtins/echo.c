@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:00:57 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/21 19:34:15 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/24 18:18:45 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 int		ft_echo(t_command *command)
 {
-	ft_printf("ECHO %s\n", command->name);
+	if (command->args)
+		ft_printf("%s", *(command->args));
+	ft_printf("\n");
 	return (0);
 }

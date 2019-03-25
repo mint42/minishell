@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:03:14 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/22 23:52:13 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/24 16:18:29 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,19 @@ static void		delete_g_env(int i)
 int				ft_unsetenv(t_command *command)
 {
 	char	**cur;
-	char	*env;
-	size_t	env_len;
 	int		i;
 
 	i = 0;
 	cur = command->args;
 	while (cur && *cur)
 	{
-		env_len = ft_strlend(*cur, '=');
-		if (validate_env(*cur) && (*cur)[env_len] == '\0')
-		{
-			env = ft_strndup(*cur, env_len);
-			ft_isenv(env, &i);
+		if (ft_isenv(*cur, &i))
 			delete_g_env(i);
-			ft_strdel(&env);
-		}
 		else
+		{
 			ft_printf("squish: unsetenv: `%s': not a valid identifier\n", *cur);
+			return (1);
+		}
 		++cur;
 	}
 	return (0);
