@@ -6,68 +6,68 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 19:33:02 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/24 18:14:15 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/25 18:20:12 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
 #include "libft.h"
 
-void		expand_string(char **s, char **input, int check_tilde)
+void		expand_string(char **s, char **input, size_t *i, int check_tilde)
 {
 	char	*tmp;
 
 	tmp = 0;
-	if (check_tilde && **input == '~')
-		expand_tilde(s, input);
-	while (!ft_strchr(" \t\n\v\f\r", **input))
+	if (check_tilde && *input[*i] == '~')
+		expand_tilde(s, *input, i);
+	while ((*input)[*i] && !ft_strchr(" \t\n\v\f\r", (*input)[*i]))
 	{
-		if (**input == '$')
-			expand_dollar_sign(&tmp, input);
-		else if (**input == '\'')
-			expand_single_quotes(&tmp, input);
-		else if (**input == '\"')
-			expand_double_quotes(&tmp, input);
+		if ((*input)[*i] == '$')
+			expand_dollar_sign(&tmp, *input, i);
+		else if ((*input)[*i] == '\'')
+			expand_single_quotes(&tmp, input, i);
+		else if ((*input)[*i] == '\"')
+			expand_double_quotes(&tmp, input, i);
 		else
-			expand_regular(&tmp, input);
+			expand_regular(&tmp, *input, i);
 		*s = ft_strcata(s, tmp);
 		ft_strdel(&tmp);
 	}
-	*input = ft_skipspace(*input);
+	*i = *i + (ft_skipspace(*input + *i) - (*input + *i));
 }
 
-void		expand_single_arg(char ***args, int *argc, char *input)
+void		expand_single_arg(char ***args, int *argc, char **input, size_t *i)
 {
 	char	*tmp;
 
 	tmp = 0;
 	*argc = 1;
 	*args = (char **)ft_memalloc(sizeof(char *) * (*argc + 1));
-	if (*input == '~')
-		expand_tilde(*(args), &input);
-	while (input && *input)
+	if ((*input)[*i] == '~')
+		expand_tilde(*(args), *input, i);
+	while (*input && (*input)[*i])
 	{
-		if (*input == '$')
-			expand_dollar_sign(&tmp, &input);
-		else if (*input == '\'')
-			expand_single_quotes(&tmp, &input);
-		else if (*input == '\"')
-			expand_double_quotes(&tmp, &input);
+		if ((*input)[*i] == '$')
+			expand_dollar_sign(&tmp, *input, i);
+		else if ((*input)[*i] == '\'')
+			expand_single_quotes(&tmp, input, i);
+		else if ((*input)[*i] == '\"')
+			expand_double_quotes(&tmp, input, i);
 		else
-			expand_regular_with_space(&tmp, &input);
+			expand_regular_with_space(&tmp, *input, i);
 		**(args) = ft_strcata(*(args), tmp);
 		ft_strdel(&tmp);
 	}
 }
 
-void		expand_args(char ***args, int *argc, char *input)
+void		expand_args(char ***args, int *argc, char **input, size_t *i)
 {
 	char	*tmp;
 	char	**cur;
 	char	*input_cur;
 
 	tmp = 0;
-	input_cur = input;
+	input_cur = *input;
 	while(input_cur && *input_cur)
 	{
 		++(*argc);
@@ -77,9 +77,9 @@ void		expand_args(char ***args, int *argc, char *input)
 		return ;
 	*args = (char **)ft_memalloc(sizeof(char *) * (*argc + 1));
 	cur = *args;
-	while (input && *input)
+	while (*input && (*input)[*i])
 	{
-		expand_string(&tmp, &input, 1);
+		expand_string(&tmp, input, i, 1);
 		*cur = ft_strdup(tmp);
 		ft_strdel(&tmp);
 		++cur;

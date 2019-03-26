@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:31:03 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/24 21:22:55 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/25 17:37:12 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,63 +14,61 @@
 #include "expand.h"
 #include "libft.h"
 
-void	expand_tilde(char **tilde, char **input)
+void	expand_tilde(char **tilde, char *input, size_t *i)
 {
-	++(*input);
+	(void)input;
+	++(*i);
 	*tilde = ft_getenv("HOME");
 }
 
-void	expand_dollar_sign(char **dollar_sign, char **input)
+void	expand_dollar_sign(char **dollar_sign, char *input, size_t *i)
 {
-	char	*cur;
-	char	tmp;
+	size_t	tmp;
+	char	c;
 
-	++(*input);
-	cur = *input;
-	if (cur && ft_isdigit(*cur))
+	++(*i);
+	tmp = *i;
+	if (input[*i] && ft_isdigit(input[*i]))
 	{
 		*dollar_sign = ft_strnew(0);
 		return ;
 	}
-	while (cur && *cur)
+	while (input && input[*i])
 	{
-		if (!ft_isalnum(*cur) && *cur != '_')
+		if (!ft_isalnum(input[*i]) && input[*i] != '_')
 			break ;
-		++cur;
+		++(*i);
 	}
-	tmp = *cur;
-	*cur = '\0';
-	*dollar_sign = ft_getenv(*input);
-	*cur = tmp;
-	*input = cur;
+	c = input[*i];
+	input[*i] = '\0';
+	*dollar_sign = ft_getenv(input + tmp);
+	input[*i] = c;
 }
 
-void	expand_regular(char **regular, char **input)
+void	expand_regular(char **regular, char *input, size_t *i)
 {
-	char	*cur;
+	size_t	tmp;
 
-	cur = *input;
-	while (cur && *cur)
+	tmp = *i;
+	while (input && input[*i])
 	{
-		if (ft_strchr(" \t\n\v\f\r$\'\"", *cur))
+		if (ft_strchr(" \t\n\v\f\r$\'\";", input[*i]))
 			break ;
-		++cur;
+		++(*i);
 	}
-	*regular = ft_strndup(*input, cur - *input);
-	*input = cur;
+	*regular = ft_strndup((input + tmp), (*i - tmp));
 }
 
-void	expand_regular_with_space(char **space, char **input)
+void	expand_regular_with_space(char **space, char *input, size_t *i)
 {
-	char	*cur;
+	size_t	tmp;
 
-	cur = *input;
-	while (cur && *cur)
+	tmp = *i;
+	while (input && input[*i])
 	{
-		if (ft_strchr("$\'\"", *cur))
+		if (ft_strchr("$\'\";", input[*i]))
 			break ;
-		++cur;
+		++(*i);
 	}
-	*space = ft_strndup(*input, cur - *input);
-	*input = cur;
+	*space = ft_strndup((input + tmp), (*i - tmp));
 }

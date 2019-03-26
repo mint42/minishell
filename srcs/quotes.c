@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_quotes.c                                    :+:      :+:    :+:   */
+/*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/24 17:36:50 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/24 21:30:16 by rreedy           ###   ########.fr       */
+/*   Created: 2019/03/25 20:10:06 by rreedy            #+#    #+#             */
+/*   Updated: 2019/03/25 20:12:56 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,59 +20,61 @@ static void		get_line_until_quote(char **input, char c)
 	size_t	len;
 
 	line = 0;
+	*input = ft_strcata(input, "\n\0");
 	while (42)
 	{
 		ft_printf(">");
 		if ((get_next_line(1, &line)) != 1)
 			continue;
 		len = (line) ? ft_strlen(line) : 1;
-		line[len - 1] = '\n';
-		*input = ft_strncata(input, line, len);
 		if (ft_strchr(line, c))
 		{
-			*input = ft_strncata(input, "\0", 1);
+			*input = ft_strncata(input, line, len);
 			break ;
 		}
-	}
-}
-
-void			expand_single_quotes(char **squote, char **input)
-{
-	char	*cur;
-
-	++(*input);
-	cur = *input;
-	while (cur && *cur != '\'')
-	{
-		if (!*cur)
-			get_line_until_quote(input, '"');
-		++cur;
-	}
-	*squote = ft_strndup(*input, cur - *input);
-	*input = ++cur;
-}
-
-void			expand_double_quotes(char **dquote, char **input)
-{
-	char	*cur;
-	char	*tmp;
-
-	tmp = 0;
-	++(*input);
-	cur = *input;
-	while (cur && *cur != '\"')
-	{
-		if (!*cur)
-			get_line_until_quote(input, '"');
-		if (*cur == '$')
+		else
 		{
-			*dquote = ft_strndup(*input, cur - *input);
-			expand_dollar_sign(&tmp, &cur);
-			*dquote = ft_strcata(dquote, tmp);
-			*input = cur;
+			line[len - 1] = '\n';
+			*input = ft_strncata(input, line, len);
 		}
-		++cur;
 	}
-	*dquote = ft_strndup(*input, cur - *input);
-	*input = ++cur;
+}
+
+void			expand_single_quotes(char **squote, char **input, size_t *i)
+{
+	size_t	tmp;
+
+	++(*i);
+	tmp = *i;
+	while (*input && (*input)[*i] != '\'')
+	{
+		if (!(*input)[*i])
+			get_line_until_quote(input, '"');
+		++(*i);
+	}
+	*squote = ft_strndup((*input + tmp), (*i - tmp));
+	++(*i);
+}
+
+void			expand_double_quotes(char **dquote, char **input, size_t *i)
+{
+	char	*dollar_sign;
+	size_t	tmp;
+
+	++(*i);
+	tmp = *i;
+	while (*input && (*input)[*i] != '\"')
+	{
+		if (!(*input)[*i])
+			get_line_until_quote(input, '"');
+		if ((*input)[*i] == '$')
+		{
+			*dquote = ft_strndup((*input + tmp), (*i - tmp));
+			expand_dollar_sign(&dollar_sign, *input, i);
+			*dquote = ft_strcata(dquote, dollar_sign);
+		}
+		++(*i);
+	}
+	*dquote = ft_strndup((*input + tmp), (*i - tmp));
+	++(*i);
 }
