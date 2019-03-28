@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 19:33:02 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/27 19:07:26 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/28 01:04:26 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void		expand_string(char **s, char **input, size_t *i, int check_tilde)
 	tmp = 0;
 	if (check_tilde && (*input)[*i] == '~')
 		expand_tilde(s, *input, i);
-	while ((*input)[*i] && !ft_strchr(" \t\n\v\f\r", (*input)[*i]))
+	while (*input && (*input)[*i] && !ft_isspace((*input)[*i]))
 	{
 		if ((*input)[*i] == '$')
 			expand_dollar_sign(&tmp, *input, i);
@@ -29,7 +29,7 @@ void		expand_string(char **s, char **input, size_t *i, int check_tilde)
 		else if ((*input)[*i] == '\"')
 			expand_double_quotes(&tmp, input, i);
 		else
-			expand_regular(&tmp, *input, i);
+			expand_regular(&tmp, " $\'\";\t\n\v\f\r", *input, i);
 		*s = ft_strcata(s, tmp);
 		ft_strdel(&tmp);
 	}
@@ -54,7 +54,7 @@ void		expand_single_arg(char ***args, int *argc, char **input, size_t *i)
 		else if ((*input)[*i] == '\"')
 			expand_double_quotes(&tmp, input, i);
 		else
-			expand_regular_with_space(&tmp, *input, i);
+			expand_regular(&tmp, "$\'\";", *input, i);
 		**(args) = ft_strcata(*(args), tmp);
 		ft_strdel(&tmp);
 	}

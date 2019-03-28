@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 20:10:06 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/27 19:43:14 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/28 01:24:29 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void		get_line_until_quote(char **input, char c)
 		ft_printf("> ");
 		if ((get_next_line(1, &line)) != 1)
 			continue;
-		len = (line) ? ft_strlen(line) : 1;
+		len = ft_strlen(line);
 		if (ft_strchr(line, c))
 		{
 			*input = ft_strncata(input, line, len);
@@ -34,47 +34,48 @@ static void		get_line_until_quote(char **input, char c)
 		}
 		else
 		{
-			line[len - 1] = '\n';
-			*input = ft_strncata(input, line, len);
+			line = ft_strcata(&line, "\n\0");
+			*input = ft_strncata(input, line, len + 1);
 		}
+		ft_strdel(&line);
 	}
 }
 
 void			expand_single_quotes(char **squote, char **input, size_t *i)
 {
-	size_t	tmp;
+	size_t	place_holder;
 
 	++(*i);
-	tmp = *i;
-	while (*input && (*input)[*i] != '\'')
+	while (*input && ((*input)[*i] || (ft_count_c(*input, '\'') % 2)))
 	{
 		if (!(*input)[*i])
 			get_line_until_quote(input, '\'');
-		++(*i);
+		place_holder = *i;
+		while (input && (*input)[*i] && (*input)[*i] != '\'')
+			++(*i);
+		*squote = ft_strncata(squote, *input + place_holder, *i - place_holder);
+		if ((*input)[*i] == '\'')
+			++(*i);
 	}
-	*squote = ft_strndup((*input + tmp), (*i - tmp));
-	++(*i);
 }
 
 void			expand_double_quotes(char **dquote, char **input, size_t *i)
 {
-	char	*dollar_sign;
-	size_t	tmp;
+	char	*tmp;
 
 	++(*i);
-	tmp = *i;
-	while (*input && (*input)[*i] != '\"')
+	tmp = 0;
+	while (*input && ((*input)[*i] || (ft_count_c(*input, '\"') % 2)))
 	{
-		if (!(*input)[*i] && (ft_count_c(*input, '\"') % 2))
+		if (!(*input)[*i])
 			get_line_until_quote(input, '\"');
 		if ((*input)[*i] == '$')
-		{
-			*dquote = ft_strndup((*input + tmp), (*i - tmp));
-			expand_dollar_sign(&dollar_sign, *input, i);
-			*dquote = ft_strcata(dquote, dollar_sign);
-		}
-		++(*i);
+			expand_dollar_sign(&tmp, *input, i);
+		else
+			expand_regular(&tmp, "$\"", *input, i);
+		*dquote = ft_strcata(dquote, tmp);
+		ft_strdel(&tmp);
+		if ((*input)[*i] == '\"')
+			++(*i);
 	}
-	*dquote = ft_strncata(dquote, (*input + tmp), (*i - tmp));
-	++(*i);
 }
