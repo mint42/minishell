@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:29:10 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/22 15:58:12 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/27 19:34:33 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int			main()
 		print_prompt();
 		if ((get_next_line(1, &input)) == 1)
 		{
-			parse_input(input);
+			parse_input(&input);
 			ft_strdel(&input);
 		}
 	}

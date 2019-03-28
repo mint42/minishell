@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 20:10:06 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/25 20:12:56 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/27 19:43:14 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void		get_line_until_quote(char **input, char c)
 	*input = ft_strcata(input, "\n\0");
 	while (42)
 	{
-		ft_printf(">");
+		ft_printf("> ");
 		if ((get_next_line(1, &line)) != 1)
 			continue;
 		len = (line) ? ft_strlen(line) : 1;
@@ -49,7 +49,7 @@ void			expand_single_quotes(char **squote, char **input, size_t *i)
 	while (*input && (*input)[*i] != '\'')
 	{
 		if (!(*input)[*i])
-			get_line_until_quote(input, '"');
+			get_line_until_quote(input, '\'');
 		++(*i);
 	}
 	*squote = ft_strndup((*input + tmp), (*i - tmp));
@@ -65,8 +65,8 @@ void			expand_double_quotes(char **dquote, char **input, size_t *i)
 	tmp = *i;
 	while (*input && (*input)[*i] != '\"')
 	{
-		if (!(*input)[*i])
-			get_line_until_quote(input, '"');
+		if (!(*input)[*i] && (ft_count_c(*input, '\"') % 2))
+			get_line_until_quote(input, '\"');
 		if ((*input)[*i] == '$')
 		{
 			*dquote = ft_strndup((*input + tmp), (*i - tmp));
@@ -75,6 +75,6 @@ void			expand_double_quotes(char **dquote, char **input, size_t *i)
 		}
 		++(*i);
 	}
-	*dquote = ft_strndup((*input + tmp), (*i - tmp));
+	*dquote = ft_strncata(dquote, (*input + tmp), (*i - tmp));
 	++(*i);
 }

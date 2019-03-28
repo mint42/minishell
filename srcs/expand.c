@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 19:33:02 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/25 18:20:12 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/27 19:07:26 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		expand_string(char **s, char **input, size_t *i, int check_tilde)
 	char	*tmp;
 
 	tmp = 0;
-	if (check_tilde && *input[*i] == '~')
+	if (check_tilde && (*input)[*i] == '~')
 		expand_tilde(s, *input, i);
 	while ((*input)[*i] && !ft_strchr(" \t\n\v\f\r", (*input)[*i]))
 	{

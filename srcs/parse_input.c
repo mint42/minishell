@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 19:04:33 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/25 18:00:45 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/27 19:35:18 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int		get_index(char *command_name)
 	return (i);
 }
 
-void			parse_input(char *input)
+void			parse_input(char **input)
 {
 	t_command	*command;
 	size_t		i;
@@ -56,15 +56,15 @@ void			parse_input(char *input)
 
 	i = 0;
 	builtin_index = 0;
-	while (input && input[i])
+	while (*input && (*input)[i])
 	{
 		command = init_command_struct();
-		expand_string(&(command->name), &input, &i, 0);
+		expand_string(&(command->name), input, &i, 0);
 		builtin_index = get_index(command->name);
 		if (builtin_index == ECHO_INDEX)
-			expand_single_arg(&(command->args), &(command->argc), &input, &i);
+			expand_single_arg(&(command->args), &(command->argc), input, &i);
 		else
-			expand_args(&(command->args), &(command->argc), &input, &i);
+			expand_args(&(command->args), &(command->argc), input, &i);
 		execute_command(command, builtin_index);
 		delete_command_struct(&command);
 	}
