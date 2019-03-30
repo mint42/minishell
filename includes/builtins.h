@@ -6,17 +6,17 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 14:56:44 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/24 18:05:41 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/29 18:46:32 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-# include "command.h"
-
 # define TOTAL_BUILTINS (7)
 # define ECHO_INDEX (1)
+
+typedef struct s_command	t_command;
 
 static char		*g_builtins[TOTAL_BUILTINS + 1] =
 {

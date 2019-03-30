@@ -6,21 +6,20 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 17:35:10 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/24 16:18:52 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/29 13:03:31 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENVIRONMENT_H
 # define ENVIRONMENT_H
 
-#include <stddef.h>
-
 char	**g_envs;
 int		g_num_envs;
 
 char	*ft_getenv(char	*env);
 int		ft_isenv(char *env, int *i);
-char	**add_env(char *env, int num_envs);
-char	**delete_env(int env_to_delete, int num_envs);
+void	add_env(char *env);
+void	replace_env(char *env, int env_to_replace);
+void	delete_env(int env_to_delete);
 
 #endif

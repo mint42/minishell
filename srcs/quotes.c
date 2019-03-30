@@ -6,12 +6,12 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 20:10:06 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/28 01:24:29 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/29 16:57:06 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environment.h"
-#include "expand.h"
+#include "expansions.h"
 #include "libft.h"
 
 static void		get_line_until_quote(char **input, char c)
@@ -27,7 +27,7 @@ static void		get_line_until_quote(char **input, char c)
 		if ((get_next_line(1, &line)) != 1)
 			continue;
 		len = ft_strlen(line);
-		if (ft_strchr(line, c))
+		if (((ft_count_c(line, c) + ft_count_c(*input, c)) % 2) == 0)
 		{
 			*input = ft_strncata(input, line, len);
 			break ;
@@ -65,17 +65,16 @@ void			expand_double_quotes(char **dquote, char **input, size_t *i)
 
 	++(*i);
 	tmp = 0;
-	while (*input && ((*input)[*i] || (ft_count_c(*input, '\"') % 2)))
+	if (ft_count_c(*input, '\"') % 2)
+		get_line_until_quote(input, '\"');
+	while (*input && (*input)[*i] && (*input)[*i] != '\"')
 	{
-		if (!(*input)[*i])
-			get_line_until_quote(input, '\"');
 		if ((*input)[*i] == '$')
 			expand_dollar_sign(&tmp, *input, i);
 		else
 			expand_regular(&tmp, "$\"", *input, i);
 		*dquote = ft_strcata(dquote, tmp);
 		ft_strdel(&tmp);
-		if ((*input)[*i] == '\"')
-			++(*i);
 	}
+	++(*i);
 }

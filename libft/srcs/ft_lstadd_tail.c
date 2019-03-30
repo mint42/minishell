@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.h                                          :+:      :+:    :+:   */
+/*   ft_lstadd_tail.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/21 17:40:13 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/29 18:42:48 by rreedy           ###   ########.fr       */
+/*   Created: 2019/03/29 19:35:47 by rreedy            #+#    #+#             */
+/*   Updated: 2019/03/29 19:41:07 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COMMAND_H
-# define COMMAND_H
+#include "libft.h"
 
-# define RET(command) (((t_command *)((command)->content))->ret)
-# define INDEX(command) (((t_command *)((command)->content))->index)
-
-typedef struct	s_command
+void	ft_lstadd_tail(t_list *head, t_list *link)
 {
-	char		*name;
-	char		**args;
-	int			argc;
-	int			index;
-	int			ret;
-}				t_command;
+	t_list	*cur;
 
-t_command		*init_command_struct(void);
-void			delete_command_struct(t_command **comm);
-
-#endif
+	cur = head;
+	if (!cur)
+	{
+		cur = link;
+		cur->next = 0;
+	}
+	else
+	{
+		while (cur)
+			cur = cur->next;
+		cur = link;
+		cur->next = 0;
+	}
+}

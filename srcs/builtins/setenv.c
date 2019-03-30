@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:02:57 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/24 16:36:16 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/29 13:00:18 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,6 @@ static int		validate_env(char *env)
 	return (!error);
 }
 
-static void		replace_g_env(char *new_env, int i)
-{
-	ft_strdel(&g_envs[i]);
-	g_envs[i] = ft_strdup(new_env);
-}
-
-static void		add_g_env(char *new_env)
-{
-	char	**new_envs;
-
-	++g_num_envs;
-	new_envs = add_env(new_env, g_num_envs);
-	ft_delete_double_array(&g_envs);
-	g_envs = new_envs;
-}
-
 int				ft_setenv(t_command	*command)
 {
 	char	**cur;
@@ -67,9 +51,9 @@ int				ft_setenv(t_command	*command)
 		if (validate_env(env) && (*cur)[env_len] == '=')
 		{
 			if (ft_isenv(env, &i))
-				replace_g_env(*cur, i);
+				replace_env(*cur, i);
 			else
-				add_g_env(*cur);
+				add_env(*cur);
 		}
 		else
 			ft_printf("squish: setenv: `%s': not a valid identifier\n", *cur);

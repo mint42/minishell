@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.h                                          :+:      :+:    :+:   */
+/*   ft_lstinit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/21 17:40:13 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/29 18:42:48 by rreedy           ###   ########.fr       */
+/*   Created: 2019/03/29 19:10:41 by rreedy            #+#    #+#             */
+/*   Updated: 2019/03/29 19:27:30 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COMMAND_H
-# define COMMAND_H
+#include "libft.h"
 
-# define RET(command) (((t_command *)((command)->content))->ret)
-# define INDEX(command) (((t_command *)((command)->content))->index)
-
-typedef struct	s_command
+t_list	*ft_lstinit(void *content)
 {
-	char		*name;
-	char		**args;
-	int			argc;
-	int			index;
-	int			ret;
-}				t_command;
+	t_list *link;
 
-t_command		*init_command_struct(void);
-void			delete_command_struct(t_command **comm);
-
-#endif
+	link = (t_list *)ft_memalloc(sizeof(t_list));
+	if (!link)
+		return (0);
+	link->next = 0;
+	if (!content)
+	{
+		link->content = 0;
+		return (link);
+	}
+	link->content = content;
+	return (link);
+}

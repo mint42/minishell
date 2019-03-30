@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 14:16:02 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/22 22:02:12 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/29 19:41:22 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef	struct		s_fp
 typedef struct		s_list
 {
 	void			*content;
-	size_t			content_size;
 	struct s_list	*next;
 }					t_list;
 
@@ -72,11 +71,13 @@ char				*ft_itoa(int n);
 char				*ft_itoabase(long long int n, int base);
 size_t				ft_len_double_array(char **double_array);
 void				ft_lstadd(t_list **head, t_list *link);
-void				ft_lstdel(t_list **list, void (*del)(void *, size_t));
-void				ft_lstdelone(t_list **link, void (*del)(void *, size_t));
+void				ft_lstadd_tail(t_list *head, t_list *link);
+void				ft_lstdel(t_list **list, void (*del)());
+void				ft_lstdelone(t_list **link, void (*del)());
 void				ft_lstiter(t_list *list, void (*f)(t_list *link));
 t_list				*ft_lstmap(t_list *list, t_list *(*f)(t_list *link));
-t_list				*ft_lstnew(const void *content, size_t content_size);
+t_list				*ft_lstnew(const void *content);
+t_list				*ft_lstinit(void *content);
 void				*ft_memalloc(size_t size);
 void				*ft_memcat(void *d, const void *s, size_t dl, size_t sl);
 void				*ft_memccpy(void *dst, const void *src, int c, size_t len);
