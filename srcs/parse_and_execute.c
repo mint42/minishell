@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:13:32 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/31 13:55:06 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/31 14:12:29 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void		get_args(t_command **command, char *op, char **input, size_t *i)
 	{
 		arg = get_arg(input, i, op, spaces);
 		larg = ft_lstinit(arg);
-		ft_lstadd_tail((*command)->args, larg);
+		ft_lstadd_tail(&(*command)->args, larg);
 		++((*command)->argc);
 	}
 }
