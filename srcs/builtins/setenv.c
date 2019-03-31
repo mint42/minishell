@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:02:57 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/29 13:00:18 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/31 13:15:24 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,28 +37,28 @@ static int		validate_env(char *env)
 
 int				ft_setenv(t_command	*command)
 {
-	char	**cur;
+	char	*arg;
 	char	*env;
 	size_t	env_len;
 	int		i;
 
 	i = 0;
-	cur = command->args;
-	while (cur && *cur)
+	while (command->args)
 	{
-		env_len = ft_strlend(*cur, '=');
-		env = ft_strndup(*cur, env_len);
-		if (validate_env(env) && (*cur)[env_len] == '=')
+		arg = (command->args)->content;
+		env_len = ft_strlend(arg, '=');
+		env = ft_strndup(arg, env_len);
+		if (validate_env(env) && (arg)[env_len] == '=')
 		{
 			if (ft_isenv(env, &i))
-				replace_env(*cur, i);
+				replace_env(arg, i);
 			else
-				add_env(*cur);
+				add_env(arg);
 		}
 		else
-			ft_printf("squish: setenv: `%s': not a valid identifier\n", *cur);
+			ft_printf("squish: setenv: `%s': not a valid identifier\n", arg);
 		ft_strdel(&env);
-		++cur;
+		command->args = (command->args)->next;
 	}
 	return (0);
 }

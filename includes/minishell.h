@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 16:16:47 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/29 18:58:39 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/31 12:46:12 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@
 typedef struct s_list		t_list;
 typedef struct s_command	t_command;
 
-t_list	*get_commands(char **input);
+void	parse_and_execute(char **input);
 void	get_args(t_command **command, char *op, char **input, size_t *i);
-void	execute_commands(t_list	*commands);
 
 #endif

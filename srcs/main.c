@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:29:10 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/29 19:21:19 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/31 12:06:04 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void		print_prompt()
 
 int			main()
 {
-	t_list			*commands;
 	extern char		**environ;
 	char			*input;
 
@@ -44,10 +43,8 @@ int			main()
 		print_prompt();
 		if ((get_next_line(1, &input)) == 1)
 		{
-			commands = get_commands(&input);
-			execute_commands(commands);
+			parse_and_execute(&input);
 			ft_strdel(&input);
-			ft_lstdel(&commands, delete_command_struct);
 		}
 	}
 	ft_delete_double_array(&g_envs);

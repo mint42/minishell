@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:03:14 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/29 13:02:08 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/31 13:15:30 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,21 @@
 
 int				ft_unsetenv(t_command *command)
 {
-	char	**cur;
+	char	*arg;
 	int		i;
 
 	i = 0;
-	cur = command->args;
-	while (cur && *cur)
+	while (command->args)
 	{
-		if (ft_isenv(*cur, &i))
+		arg = command->args->content;
+		if (ft_isenv(arg, &i))
 			delete_env(i);
 		else
 		{
-			ft_printf("squish: unsetenv: `%s': not a valid identifier\n", *cur);
+			ft_printf("squish: unsetenv: `%s': not a valid identifier\n", arg);
 			return (1);
 		}
-		++cur;
+		command->args = (command->args)->next;
 	}
 	return (0);
 }

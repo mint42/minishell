@@ -6,20 +6,19 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 17:40:13 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/29 18:42:48 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/03/31 13:03:54 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COMMAND_H
 # define COMMAND_H
 
-# define RET(command) (((t_command *)((command)->content))->ret)
-# define INDEX(command) (((t_command *)((command)->content))->index)
+typedef struct s_list	t_list;
 
 typedef struct	s_command
 {
 	char		*name;
-	char		**args;
+	t_list		*args;
 	int			argc;
 	int			index;
 	int			ret;
