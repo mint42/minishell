@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:13:32 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/31 14:12:29 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/01 13:40:18 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void		parse_and_execute(char **input)
 	while (input && (*input)[i])
 	{
 		command = init_command_struct();
+		i = i + (ft_skipspace(*input + i) - (*input + i));
 		command->name = get_arg(input, &i, " $\'\";\t\n\v\f\r", 1);
 		command->index = get_index(command->name);
 		if (command->index == ECHO_INDEX)
@@ -107,5 +108,7 @@ void		parse_and_execute(char **input)
 		else
 			get_args(&command, " $\\\'\";\t\n\v\f\r", input, &i);
 		command->ret = execute_command(command);
+		if ((*input)[i] == ';')
+			++i;
 	}
 }
