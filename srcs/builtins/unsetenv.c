@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:03:14 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/31 13:15:30 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/01 20:48:56 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,25 @@
 #include "environment.h"
 #include "libft.h"
 
+static void		print_error(char *s)
+{
+	ft_printf("squish: unsetenv: `%s': not a valid identifier\n", s);
+}
+
 int				ft_unsetenv(t_command *command)
 {
-	char	*arg;
+	t_list	*cur;
 	int		i;
 
 	i = 0;
-	while (command->args)
+	cur = command->args;
+	while (cur)
 	{
-		arg = command->args->content;
-		if (ft_isenv(arg, &i))
+		if (ft_isenv((cur)->content, &i))
 			delete_env(i);
 		else
-		{
-			ft_printf("squish: unsetenv: `%s': not a valid identifier\n", arg);
-			return (1);
-		}
-		command->args = (command->args)->next;
+			print_error((cur)->content);
+		cur = (cur)->next;
 	}
 	return (0);
 }

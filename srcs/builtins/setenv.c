@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:02:57 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/31 13:15:24 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/01 20:47:40 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 #include "environment.h"
 #include "libft.h"
 
+static void		print_error(char *s)
+{
+	ft_printf("squish: setenv: `%s': not a valid identifier\n", s);
+}
 
 static int		validate_env(char *env)
 {
@@ -37,28 +41,28 @@ static int		validate_env(char *env)
 
 int				ft_setenv(t_command	*command)
 {
-	char	*arg;
 	char	*env;
 	size_t	env_len;
 	int		i;
+	t_list	*cur;
 
 	i = 0;
-	while (command->args)
+	cur = command->args;
+	while (cur)
 	{
-		arg = (command->args)->content;
-		env_len = ft_strlend(arg, '=');
-		env = ft_strndup(arg, env_len);
-		if (validate_env(env) && (arg)[env_len] == '=')
+		env_len = ft_strlend((cur)->content, '=');
+		env = ft_strndup((cur)->content, env_len);
+		if (validate_env(env) && ((char *)((cur)->content))[env_len] == '=')
 		{
 			if (ft_isenv(env, &i))
-				replace_env(arg, i);
+				replace_env((cur)->content, i);
 			else
-				add_env(arg);
+				add_env((cur)->content);
 		}
 		else
-			ft_printf("squish: setenv: `%s': not a valid identifier\n", arg);
+			print_error((cur)->content);
 		ft_strdel(&env);
-		command->args = (command->args)->next;
+		cur = (cur)->next;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:29:18 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/31 13:05:02 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/01 14:19:01 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void		delete_command_struct(t_command **command)
 		if ((*command)->name)
 			ft_strdel(&((*command)->name));
 		if ((*command)->args)
-			ft_lstdel(&((*command)->args), ft_strdel);
+			ft_lstdel(&((*command)->args), ft_lstdelcontent);
 		ft_memdel((void **)command);
 	}
 }

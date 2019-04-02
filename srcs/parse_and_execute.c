@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:13:32 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/01 13:40:18 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/01 14:02:32 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void		parse_and_execute(char **input)
 		else
 			get_args(&command, " $\\\'\";\t\n\v\f\r", input, &i);
 		command->ret = execute_command(command);
+		delete_command_struct(&command);
 		if ((*input)[i] == ';')
 			++i;
 	}

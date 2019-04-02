@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 14:16:02 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/31 14:01:21 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/01 14:18:12 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ size_t				ft_len_double_array(char **double_array);
 void				ft_lstadd(t_list **head, t_list *link);
 void				ft_lstadd_tail(t_list **head, t_list *link);
 void				ft_lstdel(t_list **list, void (*del)());
+void				ft_lstdelcontent(void *content);
 void				ft_lstdelone(t_list **link, void (*del)());
 void				ft_lstiter(t_list *list, void (*f)(t_list *link));
 t_list				*ft_lstmap(t_list *list, t_list *(*f)(t_list *link));
