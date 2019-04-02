@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:29:10 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/31 12:06:04 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/01 21:21:17 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,17 @@ int			main()
 {
 	extern char		**environ;
 	char			*input;
+	int				ret;
 
+	ret = 1;
 	g_envs = ft_dup_double_array(environ);
 	g_num_envs = ft_len_double_array(g_envs);
-	while (42)
+	while (ret)
 	{
 		print_prompt();
 		if ((get_next_line(1, &input)) == 1)
 		{
-			parse_and_execute(&input);
+			ret = parse_and_execute(&input);
 			ft_strdel(&input);
 		}
 	}

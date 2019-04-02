@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:13:32 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/01 14:02:32 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/01 21:21:49 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static int		execute_command(t_command *command)
 		ft_cd,
 		ft_echo,
 		ft_env,
-		ft_exit,
 		ft_pwd,
 		ft_setenv,
 		ft_unsetenv,
@@ -91,7 +90,7 @@ void		get_args(t_command **command, char *op, char **input, size_t *i)
 	}
 }
 
-void		parse_and_execute(char **input)
+int			parse_and_execute(char **input)
 {
 	t_command	*command;
 	size_t		i;
@@ -103,6 +102,11 @@ void		parse_and_execute(char **input)
 		i = i + (ft_skipspace(*input + i) - (*input + i));
 		command->name = get_arg(input, &i, " $\'\";\t\n\v\f\r", 1);
 		command->index = get_index(command->name);
+		if (ft_strequ(command->name, "exit"))
+		{
+			delete_command_struct(&command);
+			return (0);
+		}
 		if (command->index == ECHO_INDEX)
 			get_args(&command, "$\\\'\";", input, &i);
 		else
@@ -112,4 +116,5 @@ void		parse_and_execute(char **input)
 		if ((*input)[i] == ';')
 			++i;
 	}
+	return (1);
 }
