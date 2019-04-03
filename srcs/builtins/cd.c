@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 21:28:09 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/31 13:06:31 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/02 20:04:18 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 #include "libft.h"
 #include <unistd.h>
 
-static void		update_pwds()
+static void		update_pwds(void)
 {
 	t_command	*command;
+	const char	*old_pwd;
 	char		*new_pwd;
-	char		*old_pwd;
 	char		*format;
 	size_t		i;
 
@@ -35,13 +35,12 @@ static void		update_pwds()
 	ft_setenv(command);
 	ft_strdel(&format);
 	ft_strdel(&new_pwd);
-	ft_strdel(&old_pwd);
 	delete_command_struct(&command);
 }
 
 int				ft_cd(t_command *command)
 {
-	char	*new_pwd;
+	const char	*new_pwd;
 
 	new_pwd = 0;
 	if (command->args)

@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:13:32 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/01 21:21:49 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/02 21:26:57 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int		get_index(char *command_name)
 	{
 		builtin_len = ft_strlen(g_builtins[i]);
 		if (ft_strnequ(command_name, g_builtins[i], builtin_len))
-			break;
+			break ;
 		++i;
 	}
 	return (i);
@@ -72,7 +72,7 @@ static char		*get_arg(char **input, size_t *i, char *op, int spaces)
 	return (arg);
 }
 
-void		get_args(t_command **command, char *op, char **input, size_t *i)
+void			get_args(t_command **command, char *op, char **input, size_t *i)
 {
 	t_list	*larg;
 	char	*arg;
@@ -90,7 +90,7 @@ void		get_args(t_command **command, char *op, char **input, size_t *i)
 	}
 }
 
-int			parse_and_execute(char **input)
+int				parse_and_execute(char **input)
 {
 	t_command	*command;
 	size_t		i;
@@ -105,16 +105,13 @@ int			parse_and_execute(char **input)
 		if (ft_strequ(command->name, "exit"))
 		{
 			delete_command_struct(&command);
-			return (0);
+			return (1);
 		}
-		if (command->index == ECHO_INDEX)
-			get_args(&command, "$\\\'\";", input, &i);
-		else
-			get_args(&command, " $\\\'\";\t\n\v\f\r", input, &i);
+		get_args(&command, " $\\\'\";\t\n\v\f\r", input, &i);
 		command->ret = execute_command(command);
 		delete_command_struct(&command);
 		if ((*input)[i] == ';')
 			++i;
 	}
-	return (1);
+	return (0);
 }

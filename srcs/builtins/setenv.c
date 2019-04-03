@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:02:57 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/01 20:47:40 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/02 20:10:51 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int		validate_env(char *env)
 	return (!error);
 }
 
-int				ft_setenv(t_command	*command)
+int				ft_setenv(t_command *command)
 {
 	char	*env;
 	size_t	env_len;

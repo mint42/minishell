@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:06:38 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/01 20:00:29 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/02 19:21:53 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,3 @@ void	ft_print_double_array(char **double_array)
 		++double_array;
 	}
 }
-

@@ -6,14 +6,14 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:28:07 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/29 16:40:03 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/02 19:50:29 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environment.h"
 #include "libft.h"
 
-int		ft_isenv(char *s, int *i)
+int		ft_isenv(const char *s, int *i)
 {
 	size_t			env_len;
 
@@ -28,7 +28,7 @@ int		ft_isenv(char *s, int *i)
 	return (0);
 }
 
-char	*ft_getenv(char	*s)
+const char	*ft_getenv(const char *s)
 {
 	size_t			env_len;
 	int				i;
@@ -38,19 +38,19 @@ char	*ft_getenv(char	*s)
 	{
 		env_len = ft_strlend(g_envs[i], '=');
 		if (!ft_strncmp(s, g_envs[i], env_len) && s[env_len] == '\0')
-			return (ft_strdup(g_envs[i] + env_len + 1));
+			return (g_envs[i] + env_len + 1);
 		++i;
 	}
-	return (ft_strnew(0));
+	return (0);
 }
 
-void	replace_env(char *new_env, int i)
+void		replace_env(const char *new_env, int i)
 {
 	ft_strdel(&g_envs[i]);
 	g_envs[i] = ft_strdup(new_env);
 }
 
-void	add_env(char *new_env)
+void		add_env(const char *new_env)
 {
 	char	**new_envs;
 	int		i;
@@ -68,7 +68,7 @@ void	add_env(char *new_env)
 	g_envs = new_envs;
 }
 
-void	delete_env(int env_to_delete)
+void		delete_env(int env_to_delete)
 {
 	char	**new_envs;
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 15:36:15 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/16 15:37:27 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/02 19:21:18 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,3 @@ char	*ft_strndup(const char *s, size_t len)
 	cpy = ft_strnew(len);
 	return (cpy ? ft_strncpy(cpy, s, len) : 0);
 }
-
