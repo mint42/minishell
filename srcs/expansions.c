@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:31:03 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/03 16:52:04 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/04 02:45:13 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,27 @@ void	expand_backslash(char **s, char *input, size_t *i)
 	++(*i);
 	backslash = input + *i;
 	*s = ft_strncata(s, backslash, 1);
+	++(*i);
+}
+
+void	expand_quotes(char **quote, char c, char **input, size_t *i)
+{
+	++(*i);
+
+	if (c == '\'')
+		expand_regular(quote, "\'", *input, i);
+	else
+	{
+		while (*input && (*input)[*i] && (*input)[*i] != '\"')
+		{
+			if ((*input)[*i] == '$')
+				expand_dollar_sign(quote, *input, i);
+			else if ((*input)[*i] == '\\')
+				expand_backslash(quote, *input, i);
+			else
+				expand_regular(quote, "$\\\"", *input, i);
+		}
+	}
 	++(*i);
 }
 

@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:13:32 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/03 16:55:43 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/04 02:42:11 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ static char		*get_arg(char **input, size_t *i)
 		else if ((*input)[*i] == '\\')
 			expand_backslash(&arg, *input, i);
 		else if ((*input)[*i] == '\'')
-			expand_single_quotes(&arg, input, i);
+			expand_quotes(&arg, '\'', input, i);
 		else if ((*input)[*i] == '\"')
-			expand_double_quotes(&arg, input, i);
+			expand_quotes(&arg, '\"', input, i);
 		else
 			expand_regular(&arg, " $\\\'\";\t\n\v\f\r", *input, i);
 	}
