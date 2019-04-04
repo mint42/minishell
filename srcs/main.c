@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:29:10 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/04 03:15:57 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/04 12:40:36 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 #include "libft.h"
 
 /*
-**	//dont forget to fix directory for root folders
-**	time_t	tim;
-**
+**	other potential prompt:
 **	tim = time(NULL);
 **	ft_printf("\e[1;31m\342\224\214");
 **	ft_printf("(\e[0;31m%s\e[1;31m)\342\224\200", "rreedy");
@@ -32,7 +30,7 @@ void		print_prompt(int prompt)
 	if (prompt == 1)
 		ft_printf("\e[0;33msquish-$\e[m ");
 	else if (prompt == 2)
-		ft_printf("> ");
+		ft_printf("\e[0;33m>\e[m ");
 }
 
 void		get_match(char **input, int i, int unmatched)
@@ -92,7 +90,7 @@ int			main(void)
 		if ((get_next_line(1, &input)) != 1)
 			continue;
 		match_quotes(&input, 0, 0);
-		ret = parse_and_execute(&input);
+		ret = parse_and_execute(input);
 		ft_strdel(&input);
 	}
 	ft_delete_double_array(&g_envs);

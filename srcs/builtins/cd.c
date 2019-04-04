@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 21:28:09 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/03 16:49:57 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/04 12:34:53 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void		update_pwds(void)
 	old_pwd = ft_getenv("PWD");
 	ft_sprintf(&format, "PWD=%s OLDPWD=%s", new_pwd, old_pwd);
 	command = init_command_struct();
-	get_args(&command, &format, &i);
+	get_args(&command, format, &i);
 	ft_setenv(command);
 	ft_strdel(&format);
 	ft_strdel(&new_pwd);

@@ -6,14 +6,14 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:28:07 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/03 23:37:05 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/04 12:51:45 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environment.h"
 #include "libft.h"
 
-int		ft_isenv(const char *s, int *i)
+int			ft_isenv(const char *s, int *i)
 {
 	size_t			env_len;
 

@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:31:03 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/04 02:45:13 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/04 12:51:53 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	expand_tilde(char **s, char *input, size_t *i)
 
 	++(*i);
 	(void)input;
-	tilde = ft_getenv("HOME");
+	tilde = (input[*i] == '/') ? ft_getenv("HOME") : "~";
 	*s = ft_strcata(s, tilde);
 }
 
@@ -48,32 +48,32 @@ void	expand_dollar_sign(char **s, char *input, size_t *i)
 	*s = ft_strcata(s, dollar_sign);
 }
 
-void	expand_backslash(char **s, char *input, size_t *i)
+void	expand_backslash(char **s, char *input, size_t *i, int quotes)
 {
 	char	*backslash;
 
-	++(*i);
+	if (!quotes || (input[*i + 1] && ft_strchr("$\"\\", input[*i + 1])))
+		++(*i);
 	backslash = input + *i;
 	*s = ft_strncata(s, backslash, 1);
 	++(*i);
 }
 
-void	expand_quotes(char **quote, char c, char **input, size_t *i)
+void	expand_quotes(char **quote, char c, char *input, size_t *i)
 {
 	++(*i);
-
 	if (c == '\'')
-		expand_regular(quote, "\'", *input, i);
+		expand_regular(quote, "\'", input, i);
 	else
 	{
-		while (*input && (*input)[*i] && (*input)[*i] != '\"')
+		while (input && input[*i] && input[*i] != '\"')
 		{
-			if ((*input)[*i] == '$')
-				expand_dollar_sign(quote, *input, i);
-			else if ((*input)[*i] == '\\')
-				expand_backslash(quote, *input, i);
+			if (input[*i] == '$')
+				expand_dollar_sign(quote, input, i);
+			else if (input[*i] == '\\')
+				expand_backslash(quote, input, i, 1);
 			else
-				expand_regular(quote, "$\\\"", *input, i);
+				expand_regular(quote, "$\\\"", input, i);
 		}
 	}
 	++(*i);

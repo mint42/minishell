@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:13:32 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/04 02:42:11 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/04 12:48:00 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,57 +49,56 @@ static int		get_index(char *command_name)
 	return (i);
 }
 
-static char		*get_arg(char **input, size_t *i)
+static char		*get_arg(char *input, size_t *i)
 {
 	char	*arg;
 
 	arg = 0;
-	if ((*input)[*i] == '~')
-		expand_tilde(&arg, *input, i);
-	while (*input && (*input)[*i] && (*input)[*i] != ';' &&
-		!ft_isspace((*input)[*i]))
+	if (input[*i] == '~')
+		expand_tilde(&arg, input, i);
+	while (input && input[*i] && input[*i] != ';' && !ft_isspace(input[*i]))
 	{
-		if ((*input)[*i] == '$')
-			expand_dollar_sign(&arg, *input, i);
-		else if ((*input)[*i] == '\\')
-			expand_backslash(&arg, *input, i);
-		else if ((*input)[*i] == '\'')
+		if (input[*i] == '$')
+			expand_dollar_sign(&arg, input, i);
+		else if (input[*i] == '\\')
+			expand_backslash(&arg, input, i, 0);
+		else if (input[*i] == '\'')
 			expand_quotes(&arg, '\'', input, i);
-		else if ((*input)[*i] == '\"')
+		else if (input[*i] == '\"')
 			expand_quotes(&arg, '\"', input, i);
 		else
-			expand_regular(&arg, " $\\\'\";\t\n\v\f\r", *input, i);
+			expand_regular(&arg, " $\\\'\";\t\n\v\f\r", input, i);
 	}
-	*i = *i + (ft_skipspace(*input + *i) - (*input + *i));
+	*i = *i + (ft_skipspace(input + *i) - (input + *i));
 	return (arg);
 }
 
-void			get_args(t_command **command, char **input, size_t *i)
+void			get_args(t_command **command, char *input, size_t *i)
 {
-	t_list	*larg;
+	t_list	*cur;
 	char	*arg;
 
 	arg = 0;
-	larg = 0;
-	while (*input && (*input)[*i] && (*input)[*i] != ';')
+	cur = 0;
+	while (input && input[*i] && input[*i] != ';')
 	{
 		arg = get_arg(input, i);
-		larg = ft_lstinit(arg);
-		ft_lstadd_tail(&(*command)->args, larg);
+		cur = ft_lstinit(arg);
+		ft_lstadd_tail(&(*command)->args, cur);
 		++((*command)->argc);
 	}
 }
 
-int				parse_and_execute(char **input)
+int				parse_and_execute(char *input)
 {
 	t_command	*command;
 	size_t		i;
 
 	i = 0;
-	while (input && (*input)[i])
+	while (input && input[i])
 	{
 		command = init_command_struct();
-		i = i + (ft_skipspace(*input + i) - (*input + i));
+		i = i + (ft_skipspace(input + i) - (input + i));
 		command->name = get_arg(input, &i);
 		command->index = get_index(command->name);
 		if (ft_strequ(command->name, "exit"))
@@ -111,7 +110,7 @@ int				parse_and_execute(char **input)
 		get_args(&command, input, &i);
 		command->ret = execute_command(command);
 		delete_command_struct(&command);
-		if ((*input)[i] == ';')
+		if (input[i] == ';')
 			++i;
 	}
 	return (0);
