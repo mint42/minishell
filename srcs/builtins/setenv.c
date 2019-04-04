@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:02:57 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/02 20:10:51 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/03 13:23:36 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int				ft_setenv(t_command *command)
 	t_list	*cur;
 
 	i = 0;
+	env = 0;
 	cur = command->args;
 	while (cur)
 	{

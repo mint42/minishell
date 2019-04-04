@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:29:10 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/02 21:24:32 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/03 13:11:33 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int			main(void)
 	int				ret;
 
 	ret = 0;
+	input = 0;
 	g_envs = ft_dup_double_array(environ);
 	g_num_envs = ft_len_double_array(g_envs);
 	while (!ret)

@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 12:22:14 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/29 19:30:27 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/03 13:08:11 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,11 @@ static int		fill_line(char **line, char **s, int red)
 	len = ft_strchr(*s, '\n') ? ft_strchr(*s, '\n') - *s : ft_strlen(*s);
 	*line = ft_strnew(len);
 	if (!*line || red == -1)
+	{
+		if (*line)
+			ft_strdel(line);
 		return (-1);
+	}
 	*line = ft_strncpy(*line, *s, len);
 	*s = stresize(s, len + 1, BUFF_SIZE + (ft_strlen(*s) - len));
 	return (*s ? 1 : -1);

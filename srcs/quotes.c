@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 20:10:06 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/29 16:57:06 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/03 16:48:20 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,10 @@ void			expand_double_quotes(char **dquote, char **input, size_t *i)
 	{
 		if ((*input)[*i] == '$')
 			expand_dollar_sign(&tmp, *input, i);
+		if ((*input)[*i] == '\\')
+			expand_backslash(&tmp, *input, i);
 		else
-			expand_regular(&tmp, "$\"", *input, i);
+			expand_regular(&tmp, "$\\\"", *input, i);
 		*dquote = ft_strcata(dquote, tmp);
 		ft_strdel(&tmp);
 	}

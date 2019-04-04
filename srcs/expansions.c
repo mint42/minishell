@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:31:03 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/02 20:32:07 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/03 16:52:04 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,20 @@ void	expand_dollar_sign(char **s, char *input, size_t *i)
 	*s = ft_strcata(s, dollar_sign);
 }
 
+void	expand_backslash(char **s, char *input, size_t *i)
+{
+	char	*backslash;
+
+	++(*i);
+	backslash = input + *i;
+	*s = ft_strncata(s, backslash, 1);
+	++(*i);
+}
+
 void	expand_regular(char **s, const char *op, char *input, size_t *i)
 {
 	char	*regular;
 	size_t	place_holder;
-	char	c;
 
 	place_holder = *i;
 	while (input && input[*i])
@@ -62,9 +71,5 @@ void	expand_regular(char **s, const char *op, char *input, size_t *i)
 		++(*i);
 	}
 	regular = input + place_holder;
-	c = regular[*i - place_holder];
-	regular[*i - place_holder] = '\0';
-	*s = ft_strcata(s, regular);
-	regular[*i - place_holder] = c;
-	
+	*s = ft_strncata(s, regular, *i - place_holder);
 }
