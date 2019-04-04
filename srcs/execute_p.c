@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:58:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/02 20:46:14 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/04 00:10:53 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,11 @@ static char		*errorm(int error)
 
 static int		get_path(char **path, char *name)
 {
-	const char		*path_env;
 	char			**paths;
 	char			**cur;
 	struct stat		stats;
 
-	path_env = ft_getenv("PATH");
-	paths = ft_strsplit(path_env, ':');
+	paths = ft_strsplit(ft_getenv("PATH"), ':');
 	cur = paths;
 	*path = ft_strdup(name);
 	while ((stat(*path, &stats) == -1) && cur && *cur)
@@ -47,9 +45,9 @@ static int		get_path(char **path, char *name)
 		*path = ft_strcata(path, name);
 		++cur;
 	}
+	ft_delete_double_array(&paths);
 	if ((!cur || !*cur) && !stats.st_nlink)
 		return (1);
-	ft_delete_double_array(&paths);
 	if (S_ISDIR(stats.st_mode))
 		return (2);
 	if (((stats.st_mode) & (EXE_BITS)) == 0)

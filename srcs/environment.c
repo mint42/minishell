@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:28:07 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/02 19:50:29 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/03 23:37:05 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ void		add_env(const char *new_env)
 	new_envs = (char **)ft_memalloc(sizeof(char *) * (g_num_envs + 1));
 	while (g_envs && g_envs[i])
 	{
-		new_envs[i] = ft_strdup(g_envs[i]);
+		new_envs[i] = g_envs[i];
 		++i;
 	}
 	new_envs[i] = ft_strdup(new_env);
-	ft_delete_double_array(&g_envs);
+	ft_memdel((void **)&g_envs);
 	g_envs = new_envs;
 }
 
@@ -79,11 +79,12 @@ void		delete_env(int env_to_delete)
 	while (i < g_num_envs)
 	{
 		if (i < env_to_delete)
-			new_envs[i] = ft_strdup(g_envs[i]);
+			new_envs[i] = g_envs[i];
 		else
-			new_envs[i] = ft_strdup(g_envs[i + 1]);
+			new_envs[i] = g_envs[i + 1];
 		++i;
 	}
-	ft_delete_double_array(&g_envs);
+	ft_strdel(&g_envs[env_to_delete]);
+	ft_memdel((void **)&g_envs);
 	g_envs = new_envs;
 }

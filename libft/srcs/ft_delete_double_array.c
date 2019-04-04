@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 15:37:08 by rreedy            #+#    #+#             */
-/*   Updated: 2019/02/20 15:55:22 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/03 23:46:40 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 
 void	ft_delete_double_array(char ***double_array)
 {
-	if (!double_array || !*double_array)
+	int		i;
+
+	i = 0;
+	if (!*double_array)
 		return ;
-	while (*double_array && **double_array)
+	while ((*double_array)[i])
 	{
-		ft_strdel(*double_array);
-		++(*double_array);
+		ft_strdel(&((*double_array)[i]));
+		++i;
 	}
-	ft_memdel((void **)*double_array);
+	ft_memdel((void **)double_array);
 }
