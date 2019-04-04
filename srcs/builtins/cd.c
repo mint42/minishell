@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 21:28:09 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/04 12:34:53 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/04 16:05:26 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ int				ft_cd(t_command *command)
 	if (!(chdir(new_pwd)))
 		update_pwds();
 	else
-		ft_printf("squish: cd: %s: is bad\n", new_pwd);
+		ft_printf("squish: cd: %s: No such file or directory\n", new_pwd);
 	return (0);
 }
