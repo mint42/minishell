@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:31:03 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/04 12:51:53 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/04 19:21:53 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	expand_tilde(char **s, char *input, size_t *i)
 
 	++(*i);
 	(void)input;
-	tilde = (input[*i] == '/') ? ft_getenv("HOME") : "~";
+	tilde = ft_getenv("HOME");
 	*s = ft_strcata(s, tilde);
 }
 
