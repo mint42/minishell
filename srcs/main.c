@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:29:10 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/04 12:40:36 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/04 16:51:38 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ void		get_match(char **input, int i, int unmatched)
 
 	new_input = 0;
 	if (unmatched & 4)
+	{
+		--i;
+		(*input)[i] = '\0';
 		unmatched = unmatched ^ 4;
+	}
 	else
 		*input = ft_strcata(input, "\n\0");
 	print_prompt(2);
