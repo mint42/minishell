@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 18:13:32 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/04 12:48:00 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/05 16:33:32 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static char		*get_arg(char *input, size_t *i)
 	char	*arg;
 
 	arg = 0;
-	if (input[*i] == '~')
+	if (input && input[*i] == '~')
 		expand_tilde(&arg, input, i);
 	while (input && input[*i] && input[*i] != ';' && !ft_isspace(input[*i]))
 	{

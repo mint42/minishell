@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 12:33:01 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/04 12:33:21 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/05 16:38:26 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ int				execute_other(t_command *command)
 	int		error;
 
 	path = 0;
+	if (!command->name)
+		return (0);
 	error = get_path(&path, command->name);
 	if (!error)
 	{
