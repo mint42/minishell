@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 14:56:44 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/01 21:13:17 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/05 17:28:07 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define BUILTINS_H
 
 # define TOTAL_BUILTINS (6)
-# define ECHO_INDEX (1)
 
 typedef struct s_command	t_command;
 

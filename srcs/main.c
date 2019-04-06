@@ -6,12 +6,13 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:29:10 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/04 16:51:38 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/05 17:55:32 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "environment.h"
 #include "command.h"
+#include "environment.h"
+#include "match_quotes.h"
 #include "minishell.h"
 #include "libft.h"
 
@@ -38,11 +39,11 @@ void		get_match(char **input, int i, int unmatched)
 	char	*new_input;
 
 	new_input = 0;
-	if (unmatched & 4)
+	if (unmatched & BKSLSH)
 	{
 		--i;
 		(*input)[i] = '\0';
-		unmatched = unmatched ^ 4;
+		unmatched = unmatched ^ BKSLSH;
 	}
 	else
 		*input = ft_strcata(input, "\n\0");
@@ -58,16 +59,16 @@ void		match_quotes(char **input, int i, int unmatched)
 {
 	while ((*input) && (*input)[i])
 	{
-		if (((unmatched & 2) == 0) && (*input)[i] == '\'')
-			unmatched = unmatched ^ 1;
-		if ((unmatched & 1) == 0)
+		if (((unmatched & DQUOTE) == 0) && (*input)[i] == '\'')
+			unmatched = unmatched ^ SQUOTE;
+		if ((unmatched & SQUOTE) == 0)
 		{
 			if ((*input)[i] == '\"')
-				unmatched = unmatched ^ 2;
+				unmatched = unmatched ^ DQUOTE;
 			else if ((*input)[i] == '\\')
 			{
 				if ((*input)[i + 1] == '\0')
-					unmatched = unmatched | 4;
+					unmatched = unmatched | BKSLSH;
 				else
 					++i;
 			}

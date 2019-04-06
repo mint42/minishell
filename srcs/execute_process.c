@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 12:33:01 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/05 16:38:26 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/05 22:27:49 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,35 +23,49 @@ static char		*errorm(int error)
 	if (error == 1)
 		return ("command not found");
 	if (error == 2)
-		return ("is a directory");
+		return ("No such file or directory");
 	if (error == 3)
-		return ("is not executable");
+		return ("Permission denied");
+	if (error == 4)
+		return ("is a directory");
 	return ("error unknown: consult your local sysadmin");
 }
 
-static int		get_path(char **path, char *name)
+static int		try_paths(char **path, char *name)
 {
 	char			**paths;
 	char			**cur;
-	struct stat		stats;
 
 	paths = ft_strsplit(ft_getenv("PATH"), ':');
 	cur = paths;
-	*path = ft_strdup(name);
-	while ((stat(*path, &stats) == -1) && cur && *cur)
+	while ((access(*path, F_OK) == -1) && cur && *cur)
 	{
 		ft_strdel(path);
-		*path = ft_strjoin(*cur, "/");
-		*path = ft_strcata(path, name);
+		ft_sprintf(path, "%s%c%s", *cur, '/', name);
 		++cur;
 	}
 	ft_delete_double_array(&paths);
-	if ((!cur || !*cur) && !stats.st_nlink)
+	if (access(*path, F_OK) == -1)
 		return (1);
-	if (S_ISDIR(stats.st_mode))
-		return (2);
-	if (((stats.st_mode) & (EXE_BITS)) == 0)
+	if (access(*path, (R_OK | X_OK)) == -1)
 		return (3);
+	return (0);
+}
+
+static int		validate_command(char **path, char *name)
+{
+	struct stat		stats;
+
+	if (!ft_strchr(name, '/'))
+		return (try_paths(path, name));
+	*path = ft_strdup(name);
+	stat(*path, &stats);
+	if (access(*path, F_OK) == -1)
+		return (2);
+	if (access(*path, (R_OK | X_OK)) == -1)
+		return (3);
+	if (S_ISDIR(stats.st_mode))
+		return (4);
 	return (0);
 }
 
@@ -75,31 +89,25 @@ static char		**get_argv(t_command *command)
 	return (argv);
 }
 
-static void		execute_process(char *path, char **argv)
-{
-	int		pid;
-
-	pid = fork();
-	if (pid == 0)
-		execve(path, argv, g_envs);
-	else
-		waitpid(pid, 0, 0);
-}
-
 int				execute_other(t_command *command)
 {
 	char	*path;
 	char	**argv;
 	int		error;
+	int		pid;
 
-	path = 0;
 	if (!command->name)
 		return (0);
-	error = get_path(&path, command->name);
+	path = 0;
+	error = validate_command(&path, command->name);
 	if (!error)
 	{
 		argv = get_argv(command);
-		execute_process(path, argv);
+		pid = fork();
+		if (pid == 0)
+			execve(path, argv, g_envs);
+		else
+			waitpid(pid, 0, 0);
 		ft_memdel((void **)&argv);
 	}
 	else

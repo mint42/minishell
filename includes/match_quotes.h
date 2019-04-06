@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   environment.h                                      :+:      :+:    :+:   */
+/*   match_quotes.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/21 17:35:10 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/05 17:33:50 by rreedy           ###   ########.fr       */
+/*   Created: 2019/04/05 17:24:55 by rreedy            #+#    #+#             */
+/*   Updated: 2019/04/05 17:26:55 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENVIRONMENT_H
-# define ENVIRONMENT_H
+#ifndef MATCH_QUOTES_H
+# define MATCH_QUOTES_H
 
-char		**g_envs;
-int			g_num_envs;
+# define SQUOTE (1)
+# define DQUOTE (2)
+# define BKSLSH (4)
 
-const char	*ft_getenv(const char *env);
-int			ft_isenv(const char *env, int *i);
-void		add_env(const char *env);
-void		replace_env(const char *env, int env_to_replace);
-void		delete_env(int env_to_delete);
+void	match_quotes(char **input, int i, int unmatched);
+void	get_match(char **input, int i, int unmatched);
 
 #endif
