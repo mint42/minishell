@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 18:42:48 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/05 18:42:49 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/06 22:55:34 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int		get_index(char *command_name)
 	while (g_builtins[i])
 	{
 		builtin_len = ft_strlen(g_builtins[i]);
-		if (ft_strnequ(command_name, g_builtins[i], builtin_len))
+		if (ft_strequ(command_name, g_builtins[i]))
 			break ;
 		++i;
 	}
