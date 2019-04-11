@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 18:42:48 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/06 22:55:34 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/11 02:00:06 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void			get_args(t_command **command, char *input, size_t *i)
 	while (input && input[*i] && input[*i] != ';')
 	{
 		arg = get_arg(input, i);
-		cur = ft_lstinit(arg);
+		cur = ft_lstinit(arg, 0);
 		ft_lstadd_tail(&(*command)->args, cur);
 		++((*command)->argc);
 	}

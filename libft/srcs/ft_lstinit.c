@@ -6,13 +6,14 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 19:10:41 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/29 19:27:30 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/11 01:55:05 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stddef.h>
 
-t_list	*ft_lstinit(void *content)
+t_list	*ft_lstinit(void *content, size_t content_size)
 {
 	t_list *link;
 
@@ -23,8 +24,10 @@ t_list	*ft_lstinit(void *content)
 	if (!content)
 	{
 		link->content = 0;
+		link->content_size = 0;
 		return (link);
 	}
 	link->content = content;
+	link->content_size = content_size;
 	return (link);
 }

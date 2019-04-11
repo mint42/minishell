@@ -6,13 +6,14 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 10:49:30 by rreedy            #+#    #+#             */
-/*   Updated: 2019/03/29 19:28:47 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/11 01:55:05 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stddef.h>
 
-t_list	*ft_lstnew(void const *content)
+t_list	*ft_lstnew(void const *content, size_t content_size)
 {
 	t_list *link;
 
@@ -23,14 +24,16 @@ t_list	*ft_lstnew(void const *content)
 	if (!content)
 	{
 		link->content = 0;
+		link->content_size = 0;
 		return (link);
 	}
-	link->content = ft_memalloc(sizeof(content));
+	link->content = ft_memalloc(content_size);
 	if (!link->content)
 	{
 		ft_memdel((void **)&link);
 		return (0);
 	}
-	ft_memcpy(link->content, content, sizeof(content));
+	ft_memcpy(link->content, content, content_size);
+	link->content_size = content_size;
 	return (link);
 }
