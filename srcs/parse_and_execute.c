@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 18:42:48 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/11 02:00:06 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/17 19:01:40 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@
 #include "environment.h"
 #include "execute_process.h"
 #include "expansions.h"
-#include "libft.h"
+#include "ft_str.h"
+#include "ft_utils.h"
+#include "ft_list.h"
+#include "ft_printf.h"
 
 static int		execute_command(t_command *command)
 {

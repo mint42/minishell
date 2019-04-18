@@ -6,12 +6,14 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:29:18 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/01 14:19:01 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/17 18:55:37 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command.h"
-#include "libft.h"
+#include "ft_mem.h"
+#include "ft_str.h"
+#include "ft_list.h"
 
 t_command	*init_command_struct(void)
 {

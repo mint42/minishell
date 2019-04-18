@@ -6,18 +6,14 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:03:14 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/01 20:48:56 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/17 19:08:19 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command.h"
 #include "environment.h"
-#include "libft.h"
-
-static void		print_error(char *s)
-{
-	ft_printf("squish: unsetenv: `%s': not a valid identifier\n", s);
-}
+#include "ft_list.h"
+#include "ft_printf.h"
 
 int				ft_unsetenv(t_command *command)
 {
@@ -31,7 +27,10 @@ int				ft_unsetenv(t_command *command)
 		if (ft_isenv((cur)->content, &i))
 			delete_env(i);
 		else
-			print_error((cur)->content);
+		{
+			ft_printf("squish: unsetenv: `%s': not a valid identifier\n",
+					cur->content);
+		}
 		cur = (cur)->next;
 	}
 	return (0);

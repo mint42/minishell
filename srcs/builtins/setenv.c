@@ -6,13 +6,16 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:02:57 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/03 13:23:36 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/17 19:07:04 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command.h"
 #include "environment.h"
-#include "libft.h"
+#include "ft_str.h"
+#include "ft_printf.h"
+#include "ft_utils.h"
+#include "ft_list.h"
 
 static void		print_error(char *s)
 {

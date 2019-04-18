@@ -6,13 +6,13 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 13:58:15 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/01 21:13:44 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/17 18:58:28 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command.h"
 #include "environment.h"
-#include "libft.h"
+#include "ft_double_array.h"
 
 int		ft_env(t_command *command)
 {

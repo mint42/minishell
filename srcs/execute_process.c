@@ -6,14 +6,18 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 12:33:01 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/05 22:27:49 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/17 19:00:02 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command.h"
 #include "environment.h"
 #include "execute_process.h"
-#include "libft.h"
+#include "ft_mem.h"
+#include "ft_str.h"
+#include "ft_list.h"
+#include "ft_printf.h"
+#include "ft_double_array.h"
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <unistd.h>

@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 21:28:09 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/04 16:05:26 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/17 19:03:34 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 #include "environment.h"
 #include "expansions.h"
 #include "minishell.h"
-#include "libft.h"
+#include "ft_str.h"
+#include "ft_printf.h"
+#include "ft_list.h"
 #include <unistd.h>
 
 static void		update_pwds(void)

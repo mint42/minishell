@@ -6,12 +6,13 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:28:07 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/04 12:51:45 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/17 18:55:35 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environment.h"
-#include "libft.h"
+#include "ft_mem.h"
+#include "ft_str.h"
 
 int			ft_isenv(const char *s, int *i)
 {

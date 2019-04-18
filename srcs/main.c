@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:29:10 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/05 17:55:32 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/17 19:00:55 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 #include "environment.h"
 #include "match_quotes.h"
 #include "minishell.h"
-#include "libft.h"
+#include "ft_str.h"
+#include "ft_printf.h"
+#include "ft_double_array.h"
+#include "get_next_line.h"
 
 /*
 **	other potential prompt:

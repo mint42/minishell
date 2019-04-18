@@ -6,21 +6,21 @@
 #    By: rreedy <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/07 18:40:55 by rreedy            #+#    #+#              #
-#    Updated: 2019/04/04 16:55:21 by rreedy           ###   ########.fr        #
+#    Updated: 2019/04/17 19:08:40 by rreedy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := minishell
-LIB += libft/libft.a
+LIB += lib/libft.a
 
 OBJS := $(patsubst %.c,%.o,$(wildcard ./srcs/*.c))
 BUILTINOBJS := $(patsubst %.c,%.o,$(wildcard ./srcs/builtins/*.c))
 
 
 CC := gcc
-INCLUDES := -I./includes -I./libft/includes
+INCLUDES := -I./includes -I./lib/includes -I./lib/includes/ft_printf
 CFLAGS += -Wall -Wextra -Werror $(INCLUDES)
-LFLAGS += -L./libft -lft
+LFLAGS += -L./lib -lft
 
 .PHONY: all clean fclean re
 
@@ -30,14 +30,14 @@ $(NAME): $(LIB) $(OBJS) $(BUILTINOBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(BUILTINOBJS) -o $(NAME) $(LFLAGS)
 
 $(LIB):
-	@- make -C libft/ all
+	@- make -C lib/ all
 
 clean:
 	@- $(RM) $(OBJS) $(BUILTINOBJS)
-	@- make -C libft/ clean
+	@- make -C lib/ clean
 
 fclean: clean
 	@- $(RM) $(NAME)
-	@- make -C libft/ fclean
+	@- make -C lib/ fclean
 
 re: fclean all

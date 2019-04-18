@@ -6,13 +6,14 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 18:31:03 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/04 19:21:53 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/17 19:00:18 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environment.h"
 #include "expansions.h"
-#include "libft.h"
+#include "ft_str.h"
+#include "ft_utils.h"
 
 void	expand_tilde(char **s, char *input, size_t *i)
 {

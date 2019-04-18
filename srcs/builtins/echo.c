@@ -6,12 +6,13 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:00:57 by rreedy            #+#    #+#             */
-/*   Updated: 2019/04/02 21:31:10 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/04/17 18:58:28 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command.h"
-#include "libft.h"
+#include "ft_list.h"
+#include "ft_printf.h"
 
 int		ft_echo(t_command *command)
 {
